@@ -53,6 +53,8 @@ export const POST = async (request: any) => {
       subscription,
       isVerified: false,
       verificationToken,
+      OTP: null,
+      imageUrl: "https://gravatar.com/avatar/2f138e608281f56869f4aad34b3e7e7d?s=400&d=robohash&r=x"
     });
 
     console.log({ newUser })
@@ -66,7 +68,7 @@ export const POST = async (request: any) => {
 
     const user = await newUser.save();
 
-    return new NextResponse(`User registered successfully --> ${user}`, { status: 200 });
+    return new NextResponse(`User registered successfully`, { status: 200 });
   } catch (error) {
     // Handle errors
     console.error("Error creating user:", error);

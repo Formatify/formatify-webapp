@@ -48,9 +48,18 @@ const userSchema = new Schema(
     verificationToken: {
       type: String,
       required: true,
-    }
+    },
+    OTP: {
+      type: String,
+      default: null
+  },
+  imageUrl: {
+      type: String,
+  }
   },
   { timestamps: true }
 );
+
+userSchema.index({ OTP: 1 }, { expireAfterSeconds: 300 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);
