@@ -24,14 +24,12 @@ export const POST = async (request: any) => {
     await connect();
 
     const body = await request.json();
-    const { firstName, lastName, email, password, country, city, university, department, subscription, verificationToken } = body.payload as RequestBody;
-
-    console.log({ verificationToken })
+    const { firstName, lastName, email, password, country, city, university, department, subscription, verificationToken } = body as RequestBody;
 
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return new NextResponse("Email is already in use", { status: 400 });
+      return NextResponse.json({ message: 'User Already Exists' }, { status: 400 })
     }
 
     if (!firstName || !lastName || !email || !password || !country || !city || !university || !department || !subscription) {
@@ -55,8 +53,6 @@ export const POST = async (request: any) => {
       verificationToken,
     });
 
-    console.log({ newUser })
-
     const emailSent = await sendEmail(email, "Welcome to Our App", `Thank you for signing up! Please click the following link to verify your email: ${process.env.NEXTAUTH_URL}verify-email?token=${verificationToken}`);
 
     if (!emailSent) {
@@ -64,10 +60,11 @@ export const POST = async (request: any) => {
       return new NextResponse("Failed to send verification email", { status: 500 });
     }
 
-    const user = await newUser.save();
+    await newUser.save();
+    return NextResponse.json({ message: 'Success! Please Check Your Email' }, { status: 201 })
+  }
 
-    return new NextResponse(`User registered successfully --> ${user}`, { status: 200 });
-  } catch (error) {
+  catch (error) {
     // Handle errors
     console.error("Error creating user:", error);
     return new NextResponse("Internal server error", { status: 500 });

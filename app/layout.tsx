@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Outfit } from "next/font/google";
 
 import "./globals.css";
@@ -7,6 +6,7 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/session-provider";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
+import LoadingProviders from "@/components/LoaderProvider";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -26,7 +26,9 @@ export default async function RootLayout({
       <body className={outfit.className}>
         <SessionProvider session={session}>
           <Providers>
-            {children}
+            <LoadingProviders>
+              {children}
+            </LoadingProviders>
           </Providers>
         </SessionProvider>
       </body>
