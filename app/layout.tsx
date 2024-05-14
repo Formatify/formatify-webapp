@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
+
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/session-provider";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Formatify",
@@ -21,14 +23,11 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={outfit.className}>
         <SessionProvider session={session}>
-          <div className="mx-auto max-w-5xl text-2xl gap-2 mb-10">
-            <Navbar />
-            <Providers>
-              {children}
-            </Providers>
-          </div>
+          <Providers>
+            {children}
+          </Providers>
         </SessionProvider>
       </body>
     </html>
