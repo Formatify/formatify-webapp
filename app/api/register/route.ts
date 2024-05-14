@@ -24,7 +24,7 @@ export const POST = async (request: any) => {
     await connect();
 
     const body = await request.json();
-    const { firstName, lastName, email, password, country, city, university, department, subscription, verificationToken } = body.payload as RequestBody;
+    const { firstName, lastName, email, password, country, city, university, department, subscription, verificationToken } = body as RequestBody;
 
     console.log({ verificationToken })
 
