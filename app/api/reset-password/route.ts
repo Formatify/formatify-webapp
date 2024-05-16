@@ -20,10 +20,7 @@ export async function POST(req: Request, res: NextResponse) {
         const user = await User.findOne({ email });
 
         if (!user || user.OTP !== OTP) {
-            return new NextResponse(
-                JSON.stringify({ success: false, message: "Invalid OTP" }),
-                { status: 400 }
-            );
+            return new NextResponse(JSON.stringify({ error_code: 'invalid_otp', message: "Oops!, Invalid OTP" }), { status: 401 });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,10 +34,7 @@ export async function POST(req: Request, res: NextResponse) {
             { status: 200 }
         );
     } catch (error) {
-        console.error("Error:", error);
-        return new NextResponse(
-            JSON.stringify({ success: false, error: "Internal Server Error" }),
-            { status: 500 }
-        );
+        console.log("Error:", error);
+        return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 }

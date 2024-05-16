@@ -22,10 +22,8 @@ export async function POST(req: Request, res: NextResponse) {
             { status: 200 }
         );
     } catch (error) {
-        return new NextResponse(
-            JSON.stringify({ message: "Invalid or expired refresh token" }),
-            { status: 401 }
-        );
+        return new NextResponse(JSON.stringify({ error_code: 'invalid_token', message: "Invalid or expired refresh token" }), { status: 401 });
+
     }
 
 }

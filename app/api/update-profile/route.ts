@@ -26,7 +26,7 @@ export const PUT = async (request: any) => {
         const user = await User.findById(userId);
 
         if (!user) {
-            return new NextResponse("User not found", { status: 404 });
+            return new NextResponse(JSON.stringify({ error_code: 'account_not_exists', message: "Account Does not exist" }), { status: 404 });
         }
 
         if (updates.firstName) user.firstName = updates.firstName;
@@ -43,7 +43,7 @@ export const PUT = async (request: any) => {
 
         return new NextResponse("Profile updated successfully", { status: 200 });
     } catch (error) {
-        console.error("Error updating user profile:", error);
-        return new NextResponse("Internal server error", { status: 500 });
+        console.log("Error updating user profile:", error);
+        return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 };

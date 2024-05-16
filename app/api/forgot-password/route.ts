@@ -43,22 +43,18 @@ export async function POST(req: Request, res: NextResponse) {
             try {
                 const emailSent = await sendEmail(email, "Forgot Password", emailContent);
 
-                console.log('Email sent Successfully', emailSent);
+            console.log('Email sent Successfully', emailSent);
 
-            } catch (error) {
-                console.error("Error While Sending Mail", error);
-            }
+        } catch (error) {
+            return new NextResponse(JSON.stringify({ error_code: 'error_sending_email', message: "Something went wrong while sending email" }), { status: 500 });
+        }
 
-            return new NextResponse(
-                JSON.stringify({ success: true }),
-                { status: 200 }
-            );
-       
-    } catch (error) {
-        console.error("Error:", error);
         return new NextResponse(
-            JSON.stringify({ success: false, error: "User Not Found" }),
-            { status: 500 }
+            JSON.stringify({ success: true }),
+            { status: 200 }
         );
+
+    } catch (error) {
+        return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 }

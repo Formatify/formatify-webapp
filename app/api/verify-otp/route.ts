@@ -14,20 +14,14 @@ export async function POST(req: any) {
     const { email, otp } = body as RequestBody;
 
     try {
-        const user= await User.findOne({ email });
+        const user = await User.findOne({ email });
 
         if (!user) {
-            return new NextResponse(
-                JSON.stringify({ message: "User Not Found" }),
-                { status: 404 }
-            );
+            return new NextResponse(JSON.stringify({ error_code: 'account_not_exists', message: "User not found" }), { status: 404 });
         }
 
         if (user.OTP !== otp) {
-            return new NextResponse(
-                JSON.stringify({ message: "Invalid OTP" }),
-                { status: 400 }
-            );
+            return new NextResponse(JSON.stringify({ error_code: 'invalid_otp', message: "Invalid OTP" }), { status: 400 });
         }
 
         user.isActive = true;
@@ -40,10 +34,7 @@ export async function POST(req: any) {
         );
     } catch (error) {
         console.error('Error confirming OTP:', error);
-        return new NextResponse(
-            JSON.stringify({ message: "Intenal Server Error" }),
-            { status: 500 }
-        );
+        return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 }
 

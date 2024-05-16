@@ -16,36 +16,24 @@ export async function POST(req: Request, res: NextResponse) {
     const { email, password } = body as RequestBody;
 
     if (!email || !password) {
-        return new NextResponse(
-            JSON.stringify({ message: "All Fields Are Required" }),
-            { status: 400 }
-        );
+        return new NextResponse(JSON.stringify({ error_code: 'field_missing', message: "All fields are required" }), { status: 400 });
     }
 
     try {
         const existingUser = await User.findOne({ email });
 
         if (!existingUser) {
-            return new NextResponse(
-                JSON.stringify({ message: "User Not Found" }),
-                { status: 404 }
-            );
+            return new NextResponse(JSON.stringify({ error_code: 'account_not_exists', message: "Account with this email does not exist" }), { status: 400 });
         }
 
         if (!existingUser.isVerified) {
-            return new NextResponse(
-                JSON.stringify({ message: "User is not verified" }),
-                { status: 401 }
-            );
+            return new NextResponse(JSON.stringify({ error_code: 'user_not_verified', message: "User is not verified for login" }), { status: 400 });
         }
 
         const passwordMatched = await compare(password, existingUser.password);
 
         if (!passwordMatched) {
-            return new NextResponse(
-                JSON.stringify({ message: "Invalid User" }),
-                { status: 401 }
-            );
+            return new NextResponse(JSON.stringify({ error_code: 'invalid_user', message: "Email or Password is invalid" }), { status: 400 });
         }
 
         const accessToken = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET_KEY as Secret, {
@@ -61,7 +49,6 @@ export async function POST(req: Request, res: NextResponse) {
             { status: 200 }
         );
     } catch (error) {
-        JSON.stringify({ message: "Internal Server Error" }),
-            { status: 500 }
+        return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 }
