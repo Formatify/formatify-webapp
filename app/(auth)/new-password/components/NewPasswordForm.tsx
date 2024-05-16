@@ -3,70 +3,49 @@
 import React, { useState } from 'react'
 import Link from 'next/link';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { SignInValidate } from '@/lib/validation';
-import { signIn } from 'next-auth/react';
 import LoadingSpinner from '@/components/Loader';
 import toast from 'react-hot-toast';
-import { useRouter } from "next/navigation";
+
+import { NewPasswordValidate } from '@/lib/validation';
+import axios from 'axios';
+import { useRouter, useSearchParams } from 'next/navigation'
+
+
 
 
 
 // Define the type for form values
-interface SignInFormValues {
+interface NewPasswordFormValues {
     email: string;
     password: string;
 }
 
-export default function SignInForm() {
+export default function NewPasswordForm() {
 
-    const initialValues: SignInFormValues = { email: '', password: '' };
+    const initialValues: NewPasswordFormValues = { email: '', password: '' };
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const [isVerifyExpired, setIsVerifyExpired] = useState(false)
+    const searchParams = useSearchParams();
+    const OTP = searchParams.get('OTP')
 
-    const SubmitForm = (values: SignInFormValues, actions: FormikHelpers<SignInFormValues>) => {
+
+
+    const SubmitForm = (values: NewPasswordFormValues, actions: FormikHelpers<NewPasswordFormValues>) => {
         const { email, password } = values;
 
-        setIsLoading(true);
-        signIn("credentials", {
-            email,
-            password,
-            redirect: false
-        })
-            .then(res => {
-                setIsLoading(false);
+        console.log(
+            { email, otp: OTP, password }
+        )
 
-                if (res?.error) {
-                    toast.error("Invalid email or password");
-                }
-
-                else {
-                    toast.success("Welcome!");
-                    actions.resetForm();
-                    if (res?.url) router.replace("/dashboard");
-                }
-            })
-            .catch(err => {
-                setIsLoading(false);
-                toast.error("Something went Wrong");
-                console.log(err)
-            })
+        axios.post('http://localhost:3000/api/reset-password', { email, otp: OTP, password })
+            .then((res) => console.log(res.data))
+            .catch((err) => toast.error(err.response.data.message))
         actions.setSubmitting(false);
     };
     return (
         <>
             {isLoading && <LoadingSpinner />}
-
-            {
-                isVerifyExpired && <div className='bg-red-200 py-2 px-4 rounded-lg mt-3 text-sm flex items-center justify-between'>
-                    User Not Verified! Please request a Email.
-                    <button className='px-4 py-2 bg-white text-red-600 rounded-full'>Request</button>
-                </div>
-            }
-
-
-
-            <Formik initialValues={initialValues} validate={SignInValidate} onSubmit={SubmitForm}>
+            <Formik initialValues={initialValues} validate={NewPasswordValidate} onSubmit={SubmitForm}>
                 {() => (
                     <Form className='my-5 flex flex-col gap-4'>
                         <div>
@@ -83,7 +62,7 @@ export default function SignInForm() {
 
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                Password*
+                                New Password*
                             </label>
 
                             <div className="relative rounded-md shadow-sm">
@@ -95,11 +74,10 @@ export default function SignInForm() {
                             <ErrorMessage name="password" component="div" className='text-sm text-red-900 pl-2 pt-2' />
                         </div>
 
-                        <div>
-                            <Link href="/forget-password" className='text-sm text-green-600 text-right block underline'>Forget Password?</Link>
-                        </div>
 
-                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Submit</button>
+
+
+                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Set Password</button>
                     </Form>
                 )}
 

@@ -7,6 +7,7 @@ import LoadingSpinner from '@/components/Loader';
 import toast from 'react-hot-toast';
 import { useRouter } from "next/navigation";
 import { Forget_Validation } from '@/lib/validation';
+import axios from 'axios';
 
 
 
@@ -25,9 +26,10 @@ export default function ForgetForm() {
     const SubmitForm = (values: ForgetFormValues, actions: FormikHelpers<ForgetFormValues>) => {
         const { email } = values;
 
-        console.log(email)
-
-
+        axios.post('http://localhost:3000/api/forgot-password', { email }).then((data) => {
+            toast.success('Success ! Check Your Mail');
+            actions.resetForm();
+        })
         actions.setSubmitting(false);
     };
     return (

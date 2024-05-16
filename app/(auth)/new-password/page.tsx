@@ -1,0 +1,38 @@
+import React from 'react'
+import NewPasswordForm from './components/NewPasswordForm'
+
+
+
+export default function page({
+  params,
+  searchParams,
+}: {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+
+  console.log(searchParams.OTP)
+
+
+  return (
+    <div>
+      <h2 className='text-2xl font-semibold'>
+        Setup New Password?
+      </h2>
+
+
+      {
+        searchParams.OTP ? <>
+
+          <h3 className='mt-5 text-xl font-medium'>Don't worry we got you 🙌</h3>
+          <p className='text-sm font-light'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta exercitationem esse, quas dolore soluta ratione quasi ipsam incidunt minima culpa!</p>
+
+          <NewPasswordForm />
+        </> : <p className='text-sm font-light'>Invalid Credentils , Please Contact Support for Correct URL.</p>
+
+      }
+
+
+    </div>
+  )
+}
