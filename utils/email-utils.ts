@@ -5,7 +5,8 @@ type MailOptions = {
     from: string;
     to: string;
     subject: string;
-    text: string;
+    text?: string;
+    html: any
 }
 
 const transporter = nodemailer.createTransport({
@@ -16,12 +17,12 @@ const transporter = nodemailer.createTransport({
     },
 } as SMTPTransport.Options);
 
-export const sendEmail = async (to: string, subject: string, text: string): Promise<boolean> => {
+export const sendEmail = async (to: string, subject: string, html:any): Promise<boolean> => {
     const mailOptions: MailOptions = {
         from: "mbabarwaseem@gmail.com",
         to,
         subject,
-        text,
+        html,
     };
 
     try {
