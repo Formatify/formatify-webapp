@@ -37,7 +37,7 @@ export default function SignInForm() {
                 setIsLoading(false);
 
                 if (res?.error) {
-                    toast.error("Invalid email or password");
+                    toast.error(res?.error);
                 }
 
                 else {
