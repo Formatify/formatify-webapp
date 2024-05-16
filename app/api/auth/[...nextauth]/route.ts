@@ -6,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import connect from "@/utils/db";
+import { NextResponse } from "next/server";
 
 export const authOptions: any = {
   // Configure one or more authentication providers
@@ -17,10 +18,15 @@ export const authOptions: any = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+      
       async authorize(credentials: any) {
         await connect();
         try {
           const user = await User.findOne({ email: credentials.email });
+
+          if(!user.isVerified) {
+            return new NextResponse(JSON.stringify({ error_code: 'user_not_verified', message: "User is not verified for login" }), { status: 401 });
+          }
           if (user) {
             const isPasswordCorrect = await bcrypt.compare(
               credentials.password,
@@ -69,7 +75,7 @@ export const authOptions: any = {
         }
       }
 
-      if(account?.provider == "google"){
+      if (account?.provider == "google") {
         await connect();
         try {
           const existingUser = await User.findOne({ email: user.email });
@@ -90,6 +96,9 @@ export const authOptions: any = {
 
     },
   },
+  pages: {
+    signIn: '/signin'
+  }
 };
 
 export const handler = NextAuth(authOptions);

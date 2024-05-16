@@ -29,15 +29,14 @@ export const POST = async (request: any) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return NextResponse.json({ message: 'User Already Exists' }, { status: 400 })
+      return new NextResponse(JSON.stringify({ error_code: 'account_exists', message: "Account with this email already exist" }), { status: 400 });
     }
 
     if (!firstName || !lastName || !email || !password || !country || !city || !university || !department || !subscription) {
-      return new NextResponse("Please fill all fields", { status: 400 });
+      return new NextResponse(JSON.stringify({ error_code: 'field_missing', message: "All fields are required" }), { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-
 
     const newUser = new User({
       firstName,
@@ -51,22 +50,20 @@ export const POST = async (request: any) => {
       subscription,
       isVerified: false,
       verificationToken,
+      OTP: null,
+      imageUrl: "https://gravatar.com/avatar/2f138e608281f56869f4aad34b3e7e7d?s=400&d=robohash&r=x"
     });
 
     const emailSent = await sendEmail(email, "Welcome to Our App", `Thank you for signing up! Please click the following link to verify your email: ${process.env.NEXTAUTH_URL}verify-email?token=${verificationToken}`);
 
     if (!emailSent) {
       console.error("Failed to send verification email");
-      return new NextResponse("Failed to send verification email", { status: 500 });
+      return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 
     await newUser.save();
     return NextResponse.json({ message: 'Success! Please Check Your Email' }, { status: 201 })
-  }
-
-  catch (error) {
-    // Handle errors
-    console.error("Error creating user:", error);
-    return new NextResponse("Internal server error", { status: 500 });
+  } catch (error) {
+    return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
   }
 };

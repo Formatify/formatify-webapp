@@ -5,6 +5,9 @@ interface SignInFormValues {
     password: string;
 }
 
+interface ForgetFormValues {
+    email: string;
+}
 
 interface SignUpFormValues {
     firstName: string;
@@ -71,12 +74,12 @@ export function Signup_validation(values: SignUpFormValues) {
         errors.deptName = "Required"
     }
 
-    if(!values.city){
+    if (!values.city) {
         errors.city = "Required"
     }
 
-    if(!values.country){
-        errors.country="Required"
+    if (!values.country) {
+        errors.country = "Required"
     }
 
 
@@ -97,6 +100,18 @@ export function Signup_validation(values: SignUpFormValues) {
 
     else if (values.password.includes(" ")) {
         errors.password = "Invalid Password"
+    }
+
+    return errors
+}
+
+export function Forget_Validation(values: ForgetFormValues) {
+    let errors: FormikErrors<ForgetFormValues> = {};
+
+    if (!values.email) {
+        errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
     }
 
     return errors
