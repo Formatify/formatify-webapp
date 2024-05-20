@@ -41,6 +41,7 @@ export default function SignInForm() {
                     if (res.status == 401) {
                         setSendEmail(email)
                         setIsVerifyExpired(true);
+                        actions.resetForm()
                     }
                     else {
                         toast.error(res?.error);
@@ -60,6 +61,18 @@ export default function SignInForm() {
             })
         actions.setSubmitting(false);
     };
+
+
+    const requestEmail = () => {
+
+        const paylaod = {
+            email: sendEmail
+        }
+
+        toast.success(`Success, Please Check email at ${paylaod.email}`)
+        setIsVerifyExpired(false)
+
+    }
     return (
         <>
             {isLoading && <LoadingSpinner />}
@@ -67,7 +80,7 @@ export default function SignInForm() {
             {
                 isVerifyExpired && <div className='bg-red-200 py-2 px-4 rounded-lg mt-3 text-sm flex items-center justify-between'>
                     <p> Your account is not verified. Please request a verification email at <span className='font-semibold'>{sendEmail}</span></p>
-                    <button className='px-4 py-2 bg-white text-red-600 rounded-full'>Request</button>
+                    <button className='px-4 py-2 bg-white text-red-600 rounded-full' onClick={requestEmail}>Request</button>
                 </div>
             }
 
