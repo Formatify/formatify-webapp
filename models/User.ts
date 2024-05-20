@@ -60,6 +60,7 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.index({ OTP: 1 }, { expireAfterSeconds: 300 });
+userSchema.index({ OTP: 1 }, { expireAfterSeconds: 100 });
+userSchema.index({ verificationToken: 1 }, { expireAfterSeconds: 86400 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);
