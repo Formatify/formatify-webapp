@@ -1,7 +1,4 @@
 import React from "react";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { ROUTES } from "@/utils/constant";
 import Signoutbtn from "./Components/Signoutbtn";
 
 const Dashboard = () => {
