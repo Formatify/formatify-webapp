@@ -44,6 +44,9 @@ export const SignInValidate = (values: SignInFormValues) => {
     else if (values.password.includes(" ")) {
         errors.password = "Invalid Password: Spaces are not permitted in passwords."
     }
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
 
     return errors
 }
@@ -106,6 +109,11 @@ export function Signup_validation(values: SignUpFormValues) {
         errors.password = "Invalid Password"
     }
 
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
+
+
     return errors
 }
 
@@ -136,6 +144,11 @@ export const NewPasswordValidate = (values: NewPasswordFormValues) => {
     else if (values.password.includes(" ")) {
         errors.password = "Invalid Password: Spaces are not permitted in passwords."
     }
+
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
+
 
 
     if (!values.confirm_password) {

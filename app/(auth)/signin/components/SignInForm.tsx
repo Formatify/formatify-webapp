@@ -22,7 +22,8 @@ export default function SignInForm() {
     const initialValues: SignInFormValues = { email: '', password: '' };
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const [isVerifyExpired, setIsVerifyExpired] = useState(false)
+    const [isVerifyExpired, setIsVerifyExpired] = useState(false);
+    const [sendEmail, setSendEmail] = useState("")
 
     const SubmitForm = (values: SignInFormValues, actions: FormikHelpers<SignInFormValues>) => {
         const { email, password } = values;
@@ -37,7 +38,13 @@ export default function SignInForm() {
                 setIsLoading(false);
 
                 if (res?.error) {
-                    toast.error(res?.error);
+                    if (res.status == 401) {
+                        setSendEmail(email)
+                        setIsVerifyExpired(true);
+                    }
+                    else {
+                        toast.error(res?.error);
+                    }
                 }
 
                 else {
@@ -59,7 +66,7 @@ export default function SignInForm() {
 
             {
                 isVerifyExpired && <div className='bg-red-200 py-2 px-4 rounded-lg mt-3 text-sm flex items-center justify-between'>
-                    User Not Verified! Please request a Email.
+                    <p> Your account is not verified. Please request a verification email at <span className='font-semibold'>{sendEmail}</span></p>
                     <button className='px-4 py-2 bg-white text-red-600 rounded-full'>Request</button>
                 </div>
             }

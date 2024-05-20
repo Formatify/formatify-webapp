@@ -31,7 +31,10 @@ export const POST = async (request: any) => {
 
     const existingUser = await User.findOne({ email });
 
-    const source = fs.readFileSync(path.resolve('/Users/mbabarwaseem/PersonalProjects/Formatify/Formatify_Next/utils/email-template/index.html'), 'utf-8').toString();
+    const emailFilePath = 'E:/formatify-webapp/utils/email-template/index.html'
+    const source = fs.readFileSync(path.resolve(emailFilePath), 'utf-8').toString();
+
+    // const source = fs.readFileSync(path.resolve('/Users/mbabarwaseem/PersonalProjects/Formatify/Formatify_Next/utils/email-template/index.html'), 'utf-8').toString();
     const template = handlebars.compile(source);
     const replacements = {
       email: email,
