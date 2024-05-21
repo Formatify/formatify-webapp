@@ -5,9 +5,10 @@ interface SignInFormValues {
     password: string;
 }
 
-interface NewPasswordFormValues {
+interface SetupNewPasswordFormValues {
     confirm_password: string;
     password: string;
+    email: string | null | undefined;
 }
 
 interface ForgetFormValues {
@@ -129,9 +130,14 @@ export function Forget_Validation(values: ForgetFormValues) {
     return errors
 }
 
-export const NewPasswordValidate = (values: NewPasswordFormValues) => {
-    let errors: FormikErrors<NewPasswordFormValues> = {};
+export const SetupNewPasswordFormValues = (values: SetupNewPasswordFormValues) => {
+    let errors: FormikErrors<SetupNewPasswordFormValues> = {};
 
+    if (!values.email) {
+        errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+    }
 
 
 
