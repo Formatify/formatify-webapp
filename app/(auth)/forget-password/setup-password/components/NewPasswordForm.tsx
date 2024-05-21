@@ -23,16 +23,10 @@ interface SetupNewPasswordFormValues {
 
 export default function NewPasswordForm() {
 
-    const data = useSession()
-
-
-    console.log("This ==>", data)
-
     const initialValues: SetupNewPasswordFormValues = { confirm_password: '', password: '', email: '' };
-    const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
     const searchParams = useSearchParams();
     const OTP = searchParams.get('otp')
+    const router = useRouter()
 
 
 
@@ -40,13 +34,17 @@ export default function NewPasswordForm() {
 
     const SubmitForm = (values: SetupNewPasswordFormValues, actions: FormikHelpers<SetupNewPasswordFormValues>) => {
 
-        const payload = { email: '', otp: OTP, password: values.password }
+        const payload = { email: values.email, OTP: OTP, password: values.password }
         console.log(payload)
 
-        if (payload.email && payload.otp) {
+        if (payload.email && payload.OTP) {
 
             axios.post('http://localhost:3000/api/reset-password', payload)
-                .then((res) => console.log(res.data))
+                .then((res) => {
+                    toast.success(res.data.message)
+                    actions.resetForm();
+                    router.replace('/signin')
+                })
                 .catch((err) => toast.error(err.response.data.message))
             actions.setSubmitting(false);
         }
@@ -59,11 +57,9 @@ export default function NewPasswordForm() {
     };
     return (
         <>
-            {isLoading && <LoadingSpinner />}
 
-            {/* {
-                !data.session && <LoadingSpinner />
-            } */}
+
+
             <Formik initialValues={initialValues} validate={SetupNewPasswordFormValues} onSubmit={SubmitForm}>
                 {() => (
                     <Form className='my-5 flex flex-col gap-4'>
