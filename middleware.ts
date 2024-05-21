@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 debugger;
 export default withAuth(function middleware(req) {
 
-    console.log({req})
     if (!req.nextauth.token) {
         const url = req.nextUrl.clone();
         console.log({url})
