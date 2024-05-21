@@ -26,6 +26,11 @@ export async function POST(req: Request, res: NextResponse) {
             );
 
             const user = await User.findOne({ email });
+
+            if (!user) {
+                return new NextResponse(JSON.stringify({ error_code: 'user_not_found', message: "User not found" }), { status: 404 });
+            }
+
             let setOTP = user?.OTP;
 
             const emailContent = `
