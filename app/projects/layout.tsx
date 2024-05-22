@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import Navbar from "./components/Navbar";
 
 interface LayoutProps {
     children: ReactNode;
@@ -8,7 +9,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     return (
         <div>
-            <div>Navbar Here</div>
+            <Navbar/>
             <div>{children}</div>
         </div>
     );
