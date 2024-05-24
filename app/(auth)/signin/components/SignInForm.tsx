@@ -99,7 +99,7 @@ export default function SignInForm() {
                             <Link href="/forget-password" className='text-sm text-green-600 text-right block underline'>Forget Password?</Link>
                         </div>
 
-                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Submit</button>
+                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Sign In</button>
                     </Form>
                 )}
 
