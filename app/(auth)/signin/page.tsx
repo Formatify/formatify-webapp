@@ -8,7 +8,7 @@ export default function page() {
 
 
       <div className="flex gap-5 mb-10">
-        <Link className='bg-black border-2 border-black text-white px-5 py-1 rounded-full text-sm' href={'/sign'}>Sign In</Link>
+        <Link className='bg-black border-2 border-black text-white px-5 py-1 rounded-full text-sm' href={'/signin'}>Sign In</Link>
         <Link className='border-2 border-black px-5 py-1 rounded-full text-sm' href={'/signup'}>Sign Up</Link>
       </div>
 

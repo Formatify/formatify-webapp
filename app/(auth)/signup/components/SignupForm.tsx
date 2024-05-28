@@ -61,7 +61,7 @@ export default function SignupForm() {
         <Formik initialValues={initialValues} validate={Signup_validation} onSubmit={SubmitForm}>
             {({ values, setFieldValue }) => (
                 <Form className='my-5 flex flex-col gap-4'>
-                    <div className='grid grid-cols-2  gap-3'>
+                    <div className='grid grid-cols-1 lg:grid-cols-2  gap-3'>
 
                         <div>
                             <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">

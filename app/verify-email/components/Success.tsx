@@ -10,7 +10,7 @@ export default function Success() {
             </div>
             <h2 className='text-3xl font-medium'>Verified!</h2>
             <p className='font-light my-5'>You have successfully veried your Account</p>
-            <Link className='px-12 bg-slate-900 text-white py-2 rounded-lg' href={'/login'}>Proceed</Link>
+            <Link className='px-12 bg-slate-900 text-white py-2 rounded-lg' href={'/signin'}>Proceed</Link>
         </div>
     )
 }
