@@ -7,6 +7,7 @@ import { countries } from '@/lib/countries';
 import { v4 as uuidv4 } from "uuid";
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface SignUpFormValues {
     fullName: string;
@@ -15,6 +16,7 @@ interface SignUpFormValues {
 }
 
 export default function SignupForm() {
+    const router = useRouter();
 
     const initialValues: SignUpFormValues = { fullName: '', email: '', password: '' };
     const SubmitForm = (values: SignUpFormValues, actions: FormikHelpers<SignUpFormValues>) => {
@@ -31,6 +33,7 @@ export default function SignupForm() {
             .then((res) => {
                 toast.success(res.data.message)
                 actions.resetForm();
+                router.replace("/signin");
             })
             .catch((err) => toast.error(err.response.data.message))
 
@@ -49,25 +52,18 @@ export default function SignupForm() {
             {({ values, setFieldValue }) => (
                 <Form className='my-5 flex flex-col gap-4'>
                     <div className='grid  gap-3'>
-
                         <div>
                             <label htmlFor="fullName" className="block text-sm font-medium leading-6 text-gray-900">
                                 Full Name*
                             </label>
 
                             <div className="relative rounded-md shadow-sm">
-
                                 <Field type="fullName" name="fullName" id="fullName" autoComplete='off' placeholder="Full Name"
                                     className="px-3 block w-full rounded-md border-0 py-1.5   text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                             <ErrorMessage name="fullName" component="div" className='text-sm text-red-900 pl-2 pt-2' />
                         </div>
-
-
-
-
-
 
                         <div >
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -94,7 +90,6 @@ export default function SignupForm() {
                             </label>
 
                             <div className="relative rounded-md shadow-sm">
-
                                 <Field
                                     type="password"
                                     name="password"
@@ -106,15 +101,10 @@ export default function SignupForm() {
                             </div>
                             <ErrorMessage name="password" component="div" className='text-sm text-red-900 pl-2 pt-2' />
                         </div>
-
-
-
                     </div>
-
                     <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Sign Up</button>
                 </Form>
             )}
-
         </Formik>
     )
 }

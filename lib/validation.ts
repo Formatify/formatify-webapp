@@ -13,9 +13,10 @@ interface SignInFormValues {
     password: string;
 }
 
-interface NewPasswordFormValues {
-    email: string;
+interface SetupNewPasswordFormValues {
+    confirm_password: string;
     password: string;
+    email: string | null | undefined;
 }
 
 interface ForgetFormValues {
@@ -75,6 +76,9 @@ export const SignInValidate = (values: SignInFormValues) => {
     else if (values.password.includes(" ")) {
         errors.password = "Invalid Password: Spaces are not permitted in passwords."
     }
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
 
     return errors
 }
@@ -109,6 +113,11 @@ export function Signup_validation(values: SignUpFormValues) {
         errors.password = "Invalid Password"
     }
 
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
+
+
     return errors
 }
 
@@ -124,14 +133,15 @@ export function Forget_Validation(values: ForgetFormValues) {
     return errors
 }
 
-export const NewPasswordValidate = (values: NewPasswordFormValues) => {
-    let errors: FormikErrors<NewPasswordFormValues> = {};
+export const SetupNewPasswordFormValues = (values: SetupNewPasswordFormValues) => {
+    let errors: FormikErrors<SetupNewPasswordFormValues> = {};
 
     if (!values.email) {
         errors.email = 'Required';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address';
     }
+
 
 
     if (!values.password) {
@@ -142,6 +152,18 @@ export const NewPasswordValidate = (values: NewPasswordFormValues) => {
 
     else if (values.password.includes(" ")) {
         errors.password = "Invalid Password: Spaces are not permitted in passwords."
+    }
+
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
+
+
+
+    if (!values.confirm_password) {
+        errors.confirm_password = 'Required';
+    } else if (values.confirm_password !== values.password) {
+        errors.confirm_password = 'Passwords must match';
     }
 
     return errors
