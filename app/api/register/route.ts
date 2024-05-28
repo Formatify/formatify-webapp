@@ -31,6 +31,7 @@ export const POST = async (request: any) => {
 
     const existingUser = await User.findOne({ email });
 
+
     const templatePath = path.resolve(process.cwd(), process.env.EMAIL_TEMPLATE_PATH!);
     const source = fs.readFileSync(templatePath, 'utf-8').toString();
     const template = handlebars.compile(source);

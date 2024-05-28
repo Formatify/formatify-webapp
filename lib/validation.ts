@@ -6,7 +6,7 @@ interface SignInFormValues {
 }
 
 interface NewPasswordFormValues {
-    email: string;
+    confirm_password: string;
     password: string;
 }
 
@@ -43,6 +43,9 @@ export const SignInValidate = (values: SignInFormValues) => {
 
     else if (values.password.includes(" ")) {
         errors.password = "Invalid Password: Spaces are not permitted in passwords."
+    }
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
     }
 
     return errors
@@ -106,6 +109,11 @@ export function Signup_validation(values: SignUpFormValues) {
         errors.password = "Invalid Password"
     }
 
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
+
+
     return errors
 }
 
@@ -124,11 +132,7 @@ export function Forget_Validation(values: ForgetFormValues) {
 export const NewPasswordValidate = (values: NewPasswordFormValues) => {
     let errors: FormikErrors<NewPasswordFormValues> = {};
 
-    if (!values.email) {
-        errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-    }
+
 
 
     if (!values.password) {
@@ -139,6 +143,18 @@ export const NewPasswordValidate = (values: NewPasswordFormValues) => {
 
     else if (values.password.includes(" ")) {
         errors.password = "Invalid Password: Spaces are not permitted in passwords."
+    }
+
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*/.test(values.password)) {
+        errors.password = "Password must include uppercase, lowercase, number, and special character";
+    }
+
+
+
+    if (!values.confirm_password) {
+        errors.confirm_password = 'Required';
+    } else if (values.confirm_password !== values.password) {
+        errors.confirm_password = 'Passwords must match';
     }
 
     return errors
