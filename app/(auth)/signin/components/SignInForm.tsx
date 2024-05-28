@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 import Link from 'next/link';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { SignInValidate } from '@/lib/validation';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import LoadingSpinner from '@/components/Loader';
 import toast from 'react-hot-toast';
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 
 
@@ -21,11 +21,13 @@ export default function SignInForm() {
 
     const initialValues: SignInFormValues = { email: '', password: '' };
     const [isLoading, setIsLoading] = useState(false);
+    const { data: session } = useSession();
     const router = useRouter();
     const [isVerifyExpired, setIsVerifyExpired] = useState(false)
 
     const SubmitForm = (values: SignInFormValues, actions: FormikHelpers<SignInFormValues>) => {
         const { email, password } = values;
+
 
         setIsLoading(true);
         signIn("credentials", {
@@ -38,12 +40,12 @@ export default function SignInForm() {
 
                 if (res?.error) {
                     toast.error(res?.error);
-                }
-
-                else {
+                } else {
                     toast.success("Welcome!");
-                    actions.resetForm();
-                    if (res?.url) router.replace("/dashboard");
+                    // actions.resetForm();     
+                    router.push('/dashboard');
+                    console.log({ session })
+
                 }
             })
             .catch(err => {
@@ -100,6 +102,7 @@ export default function SignInForm() {
                         </div>
 
                         <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Submit</button>
+                        <button className='bg-green-600 rounded-lg text-white py-2 w-full' onClick={() => signIn("google")}>Sign in with Google</button>
                     </Form>
                 )}
 

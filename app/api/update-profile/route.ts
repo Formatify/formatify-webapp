@@ -3,8 +3,7 @@ import connect from "@/utils/db";
 import { NextResponse } from "next/server";
 
 type RequestBody = {
-    firstName?: string;
-    lastName?: string;
+    userName?: string;
     email?: string;
     country?: string;
     city?: string;
@@ -21,7 +20,6 @@ export const PUT = async (request: any) => {
 
         const body = await request.json();
         const { ...updates } = body as RequestBody;
-        console.log({ ...updates })
 
         const user = await User.findById(userId);
 
@@ -29,8 +27,7 @@ export const PUT = async (request: any) => {
             return new NextResponse(JSON.stringify({ error_code: 'account_not_exists', message: "Account Does not exist" }), { status: 404 });
         }
 
-        if (updates.firstName) user.firstName = updates.firstName;
-        if (updates.lastName) user.lastName = updates.lastName;
+        if (updates.userName) user.userName = updates.userName;
         if (updates.email) user.email = updates.email;
         if (updates.country) user.country = updates.country;
         if (updates.city) user.city = updates.city;

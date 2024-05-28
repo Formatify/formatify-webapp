@@ -25,8 +25,9 @@ export default function SignupForm() {
     const SubmitForm = (values: SignUpFormValues, actions: FormikHelpers<SignUpFormValues>) => {
         const verificationToken = uuidv4();
         const payload = {
-            firstName: values.firstName,
-            lastName: values.lastName,
+            // firstName: values.firstName,
+            // lastName: values.lastName,
+            userName: values.firstName + " " + values.lastName,
             email: values.email,
             password: values.password,
             country: values.country,
