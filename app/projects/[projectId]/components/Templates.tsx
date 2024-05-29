@@ -1,15 +1,13 @@
 import React from "react";
 
-// interface Cards {Name: string;Type: string;Size: string;}
-
-export default function Cards({
-    Name,
-}:any) {
-  return (
-    <div className="w-40 h-48 bg-gray-50 p-3 flex flex-col gap-1 rounded-md border hover:border-green-400 focus:border-green-400">
+export default function Templates({Name }:any) {
+        
+    return (
+        <>
+        <div className="w-44 h-52 bg-gray-50 p-3 flex flex-col gap-1 rounded-md border hover:border-green-400 focus:border-green-400">
       <div className="flex flex-row justify-between ">
         <div className="flex flex-col">
-          <span className="text-sm text-black pb-1 ">{Name} </span>
+          <span className="text-sm text-black pb-1"> Template Name </span>
         </div>
         <img
           className=" mt-1 size-4 "
@@ -37,5 +35,6 @@ export default function Cards({
         </div>
       </div>
     </div>
-  );
+        </>
+    );
 }

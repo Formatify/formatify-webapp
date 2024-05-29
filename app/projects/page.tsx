@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Searchinput from './components/Searchinput'
-import Tabs from './components/Tabs'
+import Tab from './components/Tabs'
 
 
 export default function page() {
@@ -31,7 +31,7 @@ export default function page() {
         </header>
         <main>
             
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"><Tabs/></div>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"><Tab/></div>
         </main>
       </div>
     </>

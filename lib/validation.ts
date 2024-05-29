@@ -14,6 +14,7 @@ interface ForgetFormValues {
     email: string;
 }
 
+
 interface SignUpFormValues {
     firstName: string;
     lastName: string;
@@ -24,6 +25,17 @@ interface SignUpFormValues {
     city: string;
     country: string;
 }
+
+
+interface ProjectDetails {
+    template: string;
+    title: string;
+    members: string[];
+  }
+
+interface UserEmail{
+    emails: string;
+  }
 
 export const SignInValidate = (values: SignInFormValues) => {
     let errors: FormikErrors<SignInFormValues> = {};
@@ -160,4 +172,22 @@ export const NewPasswordValidate = (values: NewPasswordFormValues) => {
     return errors
 }
 
+
+
+export const DetailsValidate = (values: ProjectDetails) => {
+    let errors: FormikErrors<ProjectDetails> = {};
+
+    if (!values.template) {
+        errors.template = 'Required';
+    } 
+
+    if (!values.title) {
+        errors.title = 'Required';
+    } 
+
+
+   
+
+    return errors
+}
 
