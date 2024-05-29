@@ -1,11 +1,7 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import Cards from "../../components/Cards";
+import {Details} from "@/types/interfaces"
 
-interface Details {
-  title: string;
-  email: string[];
-}
+
 
 export default function Confirmed() {
   const initialValues: Details = {

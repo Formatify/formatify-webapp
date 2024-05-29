@@ -2,14 +2,11 @@
 
 import React, { useState } from "react";
 import Cards from "./Cards";
+import { files, file2, file3 } from "@/constants/constants";
 
 const Tab = () => {
   const [open, setOpen] = useState("All Files");
-  // const [allFiles, setAllFiles] = useState({});
 
-  const files = [ "File 1" ,"File 2", "File 3","File 4","File 5","File 6", "File 7", "File 8", "File 9" ] ;
-  const file2 = [ "File 1" ,"File 2", "File 3","File 4","File 5","File 6", "File 7",];
-  const file3 = ["File 1" ,"File 2", "File 3","File 4","File 5", ]
 
   const handleTabOpen = (tabCategory: any) => {
     setOpen(tabCategory);

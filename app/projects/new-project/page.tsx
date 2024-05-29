@@ -1,12 +1,40 @@
-import React from 'react'
-import Sidebar from './components/sidebar'
+import React from "react";
+import Stepper from "./components/Stepper";
+
 
 export default function page() {
   return (
-    <div className="flex bg-green-200 h-screen">
-      <div className='bg-red-200'> hahahahaha</div>
+<>
+
+<div className="min-h-full bg-gray-50">
+  <div className="bg-gray-50">
+    
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+          <p className='pt-8'> Projects <b>/Create Project</b></p>
+          </div>
+        </div>
       
-     <Sidebar/>
+  
+  </div>
+  
+
+  <header className="bg-gray-50 ">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+     
+     
+      <Stepper/>
+
     </div>
+  </header>
+  <main>
+      
+    <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"></div>
+  </main>
+</div>
+</>
+  
+  
   )
 }
+    

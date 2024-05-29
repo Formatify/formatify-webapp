@@ -16,6 +16,7 @@
     "@types/bcryptjs": "^2.4.6",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
+    "classnames": "^2.5.1",
     "crypto-random-string": "^5.0.0",
     "formik": "^2.4.6",
     "handlebars": "^4.7.8",

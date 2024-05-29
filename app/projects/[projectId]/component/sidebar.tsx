@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import classNames from "classnames";
 import {
   HomeIcon,
   Battery0Icon,
@@ -26,6 +27,8 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [CompoToRender, setCompoToRender] = useState(<></>);
   const [active, setActive] = useState("");
+
+
   const Menus = [
     {
       title: "Design",
@@ -78,14 +81,11 @@ const Sidebar = () => {
       >
         <ul className="mt-4">
           {Menus.map((menu, index) => {
+            const btnClass = classNames('mt-2 font-semibold text-orange-800 text-sm flex flex-col items-center gap-x-4 cursor-pointer  p-2  hover:text-orange-600 hover:font-semibold', {'bg-gray-800 text-orange-600 font-semibold': active === menu.title}, {'bg-gray-900': active !== menu.title})
             return (
               <li
                 key={index}
-                className={`mt-2 font-semibold text-orange-800 text-sm flex flex-col items-center gap-x-4 cursor-pointer  p-2  hover:text-orange-600 hover:font-semibold ${
-                  active === menu.title
-                    ? "bg-gray-800 text-orange-600 font-semibold"
-                    : "bg-gray-900"
-                } `}
+                className={btnClass}
                 onClick={() => {
                   setIsOpen(true);
                   setCompoToRender(menu.CompoToRender);

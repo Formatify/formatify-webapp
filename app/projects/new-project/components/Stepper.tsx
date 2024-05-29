@@ -2,22 +2,19 @@
 
 import React, { useState } from "react";
 import Templates from "./Templates";
-import ProjDetails from "./ProjDetails";
-import Confirmed from "./confirmed";
-import Cards from "../../components/Cards";
+ import Cards from "../../components/Cards";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { DetailsValidate } from "@/lib/validation";
-import { error } from "console";
+import classNames from "classnames";
+import {ProjectDetails} from "@/types/interfaces";
+import { emailRegex } from "@/lib/validation";
+import { template } from "@/constants/constants";
 
-interface ProjectDetails {
-  template: string;
-  title: string;
-  members: string[];
-}
+
 
 const Stepper = () => {
-  const [open, setOpen] = useState("Confirmation");
-  const template = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20",];
+  const [open, setOpen] = useState("Template Gallery");
+  
 
   const handleTabOpen = (tabCategory: any) => {
     setOpen(tabCategory);
@@ -45,7 +42,6 @@ const Stepper = () => {
   const [members, setMembers] = useState<string[]>([]); // Specify the type of members as an array of strings
 
   const addMember = () => {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     if (email && !members.includes(email) && emailRegex.test(email)) {
       setMembers([...members, email]);
       setEmail("");
@@ -59,7 +55,7 @@ const Stepper = () => {
   };
 
   const initialValues: ProjectDetails = {
-    template: "dafd",
+    template: "",
     title: "",
     members: members,
   };
@@ -70,14 +66,21 @@ const Stepper = () => {
   ) => {
     const { template, title, members } = values;
     console.log(values.template, values.title, values.members);
-    alert("Form Submitted: Title" + values.title+" Template:"+ values.template + "Members:" + values.members);
     actions.resetForm();
     setMembers([]);
   };
 
+  const stepperLine01 = classNames("h-1 w-32",{ "bg-green-200": open === "Template Gallery", "bg-green-400": open === "Project Details" || open === "Confirmation"})
+  const stepperLine02 = classNames("h-1 w-32 bg-green-200",{"bg-green-400": open === "Confirmation"})
+  const StepperStep02= classNames("cursor-pointer   border  rounded-full  size-12 text-xl font-medium flex items-center justify-center text-body-color bg-green-200 border-green-200 text-gray-400",{"bg-primary text-white bg-green-400 border-green-400": open === "Project Details" || open === "Confirmation"})
+  const StepperStep03 = classNames("cursor-pointer border rounded-full  size-12 text-xl font-medium flex items-center justify-center text-body-color bg-green-200 border-green-200 text-gray-400",{"bg-primary text-white bg-green-400 border-green-400": open === "Confirmation"})
+  const backButtonClass= classNames("bg-white text-green-400 border border-green-400 px-10 py-2 rounded-md", {"hidden": open === "Template Gallery"})
+  const nextButtonClass= classNames("bg-green-400 text-white px-10 py-2 rounded-md mr-4",{"hidden": open === "Confirmation"})
+  const submitButtonClass= classNames("bg-green-400 text-white px-10 py-2 rounded-md mr-4",{"hidden": open !== "Confirmation"})
+
   return (
     <>
-      <section className=" ">
+      <section >
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
@@ -90,46 +93,24 @@ const Stepper = () => {
                     <span> 1 </span>
                   </a>
                   <div
-                    className={`h-1 w-32 ${
-                      open === "Template Gallery"
-                        ? "bg-green-200"
-                        : open === "Project Details"
-                        ? "bg-green-400"
-                        : "bg-green-400"
-                    }`}
+                    className={stepperLine01}
                   >
                     {" "}
                   </div>
                   <a
                     onClick={() => handleTabOpen("Project Details")}
-                    className={`cursor-pointer   border  rounded-full  size-12 text-xl font-medium flex items-center justify-center ${
-                      open === "Project Details"
-                        ? "bg-primary text-white bg-green-400 border-green-400"
-                        : open === "Confirmation"
-                        ? "bg-primary text-white bg-green-400 border-green-400"
-                        : "text-body-color bg-green-200 border-green-200 text-gray-400"
-                    }`}
+                    className={StepperStep02}
                   >
                     <span>2</span>
                   </a>
                   <div
-                    className={`h-1 w-32 ${
-                      open === "Template Gallery"
-                        ? "bg-green-200"
-                        : open === "Project Details"
-                        ? "bg-green-200"
-                        : "bg-green-400"
-                    }`}
+                    className={stepperLine02}
                   >
                     {" "}
                   </div>
                   <a
                     onClick={() => handleTabOpen("Confirmation")}
-                    className={`cursor-pointer border rounded-full  size-12 text-xl font-medium flex items-center justify-center ${
-                      open === "Confirmation"
-                        ? "bg-primary text-white bg-green-400 border-green-400"
-                        : "text-body-color text-gray-400 bg-green-200 border-green-200"
-                    }`}
+                    className={StepperStep03}
                   >
                     <span>3</span>
                   </a>
@@ -352,36 +333,24 @@ const Stepper = () => {
 
                       <div className=" mb-3 flex flex-row gap-4 flex-wrap justify-end">
                         <button
-                          className={`bg-white text-green-400 border border-green-400 px-10 py-2 rounded-md ${
-                            open === "Template Gallery" && "hidden"
-                          }`}
+                          className={backButtonClass}
                           onClick={handleback}
                           type="button"
                         >
                           Back
                         </button>
+                        
                         <button
-                          className={`bg-green-400 text-white px-10 py-2 rounded-md mr-4 ${
-                            open === "Confirmation" && "hidden"
-                          }`}
+                          className={nextButtonClass}
                           onClick={handlenext}
                           type="button"
                         >
                           Next
                         </button>
-                        {/* 
-                      <button
-                        className={`bg-green-400 text-white px-10 py-2 rounded-md mr-4 ${open === ("Confirmation"||"Template Gallery")&& "hidden"}`}
-                        // onClick={ handlenext}
-                        type="submit"
-                      >
-                        Next
-                      </button> */}
+
 
                         <button
-                          className={`bg-green-400 text-white px-10 py-2 rounded-md mr-4 ${
-                            open !== "Confirmation" && "hidden"
-                          }`}
+                          className={submitButtonClass}
                           type="submit"
                         >
                           Submit

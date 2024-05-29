@@ -1,41 +1,6 @@
 import { FormikErrors } from "formik";
+import { ProjectDetails, SignInFormValues, NewPasswordFormValues, ForgetFormValues, SignUpFormValues } from "@/types/interfaces";
 
-interface SignInFormValues {
-    email: string;
-    password: string;
-}
-
-interface NewPasswordFormValues {
-    confirm_password: string;
-    password: string;
-}
-
-interface ForgetFormValues {
-    email: string;
-}
-
-
-interface SignUpFormValues {
-    firstName: string;
-    lastName: string;
-    organizationName: string;
-    deptName: string;
-    email: string;
-    password: string;
-    city: string;
-    country: string;
-}
-
-
-interface ProjectDetails {
-    template: string;
-    title: string;
-    members: string[];
-  }
-
-interface UserEmail{
-    emails: string;
-  }
 
 export const SignInValidate = (values: SignInFormValues) => {
     let errors: FormikErrors<SignInFormValues> = {};
@@ -191,3 +156,4 @@ export const DetailsValidate = (values: ProjectDetails) => {
     return errors
 }
 
+ export const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;

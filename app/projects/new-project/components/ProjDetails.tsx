@@ -1,13 +1,8 @@
 "use client"
 
 import React from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { useState } from "react";
 
-interface Details {
-  title: string;
-  email: string[];
-}
 
 export default function ProjDetails() {
 
