@@ -1,12 +1,8 @@
 import NextAuth from "next-auth";
-import { Account, User as AuthUser } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import connect from "@/utils/db";
-import { NextResponse } from "next/server";
 
 export const authOptions: any = {
   providers: [
@@ -17,44 +13,53 @@ export const authOptions: any = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials: any) {
         await connect();
         try {
           const user = await User.findOne({ email: credentials.email });
 
           if (!user) {
-            throw new Error("User not exist");
+            throw new Error("User does not exist");
           }
 
           if (!user.isVerified) {
             throw new Error("User is not verified");
           }
-          if (user) {
-            const isPasswordCorrect = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
-            if (isPasswordCorrect) {
-              return user;
-            }
+
+          const isPasswordCorrect = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
+
+          if (!isPasswordCorrect) {
+            throw new Error("Incorrect password");
           }
+
+          const { password, OTP, ...userWithoutPassword } = user.toObject();
+          return userWithoutPassword;
         } catch (err: any) {
-          throw new Error(err);
+          throw new Error(err.message);
         }
       },
     }),
   ],
   callbacks: {
-    async signIn({ user, account }: { user: AuthUser; account: Account }) {
-      if (account?.provider == "credentials") {
-        return true;
+    async jwt({ token, user }: { token: any; user: any }) {
+      if (user) {
+        token.user = user;
       }
+      return token;
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      if (token.user) {
+        session.user = token.user;
+      }
+      return session;
     },
   },
   pages: {
-    signIn: '/signin'
-  }
+    signIn: '/signin',
+  },
 };
 
 export const handler = NextAuth(authOptions);

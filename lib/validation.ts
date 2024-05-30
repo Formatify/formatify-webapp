@@ -1,5 +1,54 @@
 import { FormikErrors } from "formik";
-import { ProjectDetails, SignInFormValues, NewPasswordFormValues, ForgetFormValues, SignUpFormValues } from "@/types/interfaces";
+import { ProjectDetails, SignInFormValues,  ForgetFormValues,  } from "@/types/interfaces";
+
+
+
+interface AuthFormProps {
+    email: string;
+    password: string;
+}
+
+
+interface SetupNewPasswordFormValues {
+    confirm_password: string;
+    password: string;
+    email: string | null | undefined;
+}
+
+
+interface SignUpFormValues {
+    fullName: string;
+    email: string;
+    password: string;
+}
+
+
+
+
+
+export const AuthValidate = (values: AuthFormProps) => {
+    let errors: FormikErrors<AuthFormProps> = {};
+
+    if (!values.email) {
+        errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+    }
+
+
+    if (!values.password) {
+        errors.password = 'Required';
+    } else if (values.password.length < 8 || values.password.length > 20) {
+        errors.password = 'Must be greater than 8 & less than 20 Characters';
+    }
+
+    else if (values.password.includes(" ")) {
+        errors.password = "Invalid Password: Spaces are not permitted in passwords."
+    }
+
+    return errors
+}
+
 
 
 export const SignInValidate = (values: SignInFormValues) => {
@@ -34,36 +83,8 @@ export function Signup_validation(values: SignUpFormValues) {
     let errors: FormikErrors<SignUpFormValues> = {};
 
 
-    if (!values.firstName) {
-        errors.firstName = "Required"
-    }
-
-    else if (values.firstName.includes(" ")) {
-        errors.firstName = "Invalid firstName"
-    }
-
-
-    if (!values.lastName) {
-        errors.lastName = "Required"
-    }
-    else if (values.lastName.includes(" ")) {
-        errors.lastName = "Invalid lastName"
-    }
-
-    if (!values.organizationName) {
-        errors.organizationName = "Required"
-    }
-
-    if (!values.deptName) {
-        errors.deptName = "Required"
-    }
-
-    if (!values.city) {
-        errors.city = "Required"
-    }
-
-    if (!values.country) {
-        errors.country = "Required"
+    if (!values.fullName) {
+        errors.fullName = "Required"
     }
 
 
@@ -106,9 +127,14 @@ export function Forget_Validation(values: ForgetFormValues) {
     return errors
 }
 
-export const NewPasswordValidate = (values: NewPasswordFormValues) => {
-    let errors: FormikErrors<NewPasswordFormValues> = {};
+export const SetupNewPasswordFormValues = (values: SetupNewPasswordFormValues) => {
+    let errors: FormikErrors<SetupNewPasswordFormValues> = {};
 
+    if (!values.email) {
+        errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
+    }
 
 
 

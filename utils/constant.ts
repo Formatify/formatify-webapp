@@ -5,5 +5,5 @@ export const ROUTES = {
     REGISTER: '/register',
     LOGIN: '/login',
     DASHBOARD: '/dashboard',
-    Project: '/project',
+    PROJECTS : '/projects'
 }
