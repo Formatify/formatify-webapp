@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '@projectId/sidebar'
+import Sidebar from '@projects/[projectId]/components/sidebar'
 
 export default function page({ params }: any) {
   return (

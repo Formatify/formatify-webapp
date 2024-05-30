@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Templates from "@newProject/Templates";
- import Cards from "@projects/Cards";
+import Templates from "@projects/new-project/components/Templates";
+ import Cards from "@projects/components/Cards";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { DetailsValidate } from "@/lib/validation";
 import classNames from "classnames";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Cards from "@projects/Cards";
+import Cards from "@projects/components/Cards";
 import { files, file2, file3 } from "@/constants/index";
 
 const Tab = () => {

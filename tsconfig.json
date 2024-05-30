@@ -19,9 +19,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@projects/*": ["./app/projects/components/*"],
-      "@newProject/*": ["./app/projects/new-project/components/*"],
-      "@projectId/*": ["./app/projects/[projectId]/components/*"],
+      "@projects/*": ["./app/projects/*"],
     }
   },
   "include": ["next-env.d.ts",  "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

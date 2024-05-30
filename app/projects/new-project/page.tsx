@@ -1,5 +1,5 @@
 import React from "react";
-import Stepper from "@newProject/Stepper";
+import Stepper from "@projects/new-project/components/Stepper";
 
 
 export default function page() {

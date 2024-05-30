@@ -14,14 +14,14 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 
-import Design from "@projectId/Design";
-import Element from "@projectId/Element";
-import Text from "@projectId/Text";
-import Brand from "@projectId/Brand";
-import Upload from "@projectId/Upload";
-import Draw from "@projectId/Draw";
-import Project from "@projectId/Project";
-import Appli from "@projectId/Appli";
+import Design from "@projects/[projectId]/components/Design";
+import Element from "@projects/[projectId]/components/Element";
+import Text from "@projects/[projectId]/components/Text";
+import Brand from "@projects/[projectId]/components/Brand";
+import Upload from "@projects/[projectId]/components/Upload";
+import Draw from "@projects/[projectId]/components/Draw";
+import Project from "@projects/[projectId]/components/Project";
+import Appli from "@projects/[projectId]/components/Appli";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
