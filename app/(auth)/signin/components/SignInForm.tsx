@@ -23,7 +23,8 @@ export default function SignInForm() {
     const [isLoading, setIsLoading] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
-    const [isVerifyExpired, setIsVerifyExpired] = useState(false)
+    const [isVerifyExpired, setIsVerifyExpired] = useState(false);
+    const [sendEmail, setSendEmail] = useState("")
 
     const SubmitForm = (values: SignInFormValues, actions: FormikHelpers<SignInFormValues>) => {
         const { email, password } = values;
@@ -39,8 +40,17 @@ export default function SignInForm() {
                 setIsLoading(false);
 
                 if (res?.error) {
-                    toast.error(res?.error);
-                } else {
+                    if (res.status == 401) {
+                        setSendEmail(email)
+                        setIsVerifyExpired(true);
+                        actions.resetForm()
+                    }
+                    else {
+                        toast.error(res?.error);
+                    }
+                }
+
+                else {
                     toast.success("Welcome!");
                     // actions.resetForm();     
                     router.push('/dashboard');
@@ -55,14 +65,26 @@ export default function SignInForm() {
             })
         actions.setSubmitting(false);
     };
+
+
+    const requestEmail = () => {
+
+        const paylaod = {
+            email: sendEmail
+        }
+
+        toast.success(`Success, Please Check email at ${paylaod.email}`)
+        setIsVerifyExpired(false)
+
+    }
     return (
         <>
             {isLoading && <LoadingSpinner />}
 
             {
                 isVerifyExpired && <div className='bg-red-200 py-2 px-4 rounded-lg mt-3 text-sm flex items-center justify-between'>
-                    User Not Verified! Please request a Email.
-                    <button className='px-4 py-2 bg-white text-red-600 rounded-full'>Request</button>
+                    <p> Your account is not verified. Please request a verification email at <span className='font-semibold'>{sendEmail}</span></p>
+                    <button className='px-4 py-2 bg-white text-red-600 rounded-full' onClick={requestEmail}>Request</button>
                 </div>
             }
 
