@@ -49,6 +49,7 @@ export const authOptions: any = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),

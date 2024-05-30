@@ -7,9 +7,7 @@ import { SignInValidate } from '@/lib/validation';
 import { signIn, useSession } from 'next-auth/react';
 import LoadingSpinner from '@/components/Loader';
 import toast from 'react-hot-toast';
-import { redirect, useRouter } from "next/navigation";
-
-
+import { useRouter } from "next/navigation";
 
 // Define the type for form values
 interface SignInFormValues {
@@ -65,6 +63,27 @@ export default function SignInForm() {
             })
         actions.setSubmitting(false);
     };
+
+    const handleGoogleLogin = async () => {
+        setIsLoading(true);
+        try {
+            const res = await signIn("google", { callbackUrl: "/dashboard" });
+            setIsLoading(false);
+            if (res?.error) {
+                toast.error(res.error);
+            } else {
+                console.log({ session });
+                setTimeout(() => {
+                    router.push('/dashboard');
+                }, 3000)
+            }
+        } catch (err) {
+            setIsLoading(false);
+            toast.error("Something went wrong");
+            console.error(err);
+        }
+    };
+
 
 
     const requestEmail = () => {
@@ -124,7 +143,7 @@ export default function SignInForm() {
                         </div>
 
                         <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Submit</button>
-                        <button className='bg-green-600 rounded-lg text-white py-2 w-full' onClick={() => signIn("google")}>Sign in with Google</button>
+                        <button className='bg-green-600 rounded-lg text-white py-2 w-full' onClick={handleGoogleLogin}>Sign in with Google</button>
                     </Form>
                 )}
 
