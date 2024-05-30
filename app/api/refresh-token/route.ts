@@ -12,7 +12,7 @@ export async function POST(req: Request, res: NextResponse) {
 
     try {
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY as Secret) as jwt.JwtPayload;
-        console.log({ decoded })
+       
         const accessToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_SECRET_KEY as Secret, {
             expiresIn: "12h",
         });

@@ -26,9 +26,6 @@ export const POST = async (request: any) => {
 
     const body = await request.json();
     const { userName, email, password, country, city, university, department, subscription, verificationToken } = body as RequestBody;
-
-    console.log({ userName, email, password, country, city, university, department, subscription, verificationToken })
-
     const existingUser = await User.findOne({ email });
 
 
@@ -69,7 +66,6 @@ export const POST = async (request: any) => {
     const emailSent = await sendEmail(email, "Welcome to Our App", htmlToSend);
 
     if (!emailSent) {
-      console.error("Failed to send verification email");
       return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 

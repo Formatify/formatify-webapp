@@ -117,9 +117,10 @@ export const authOptions: any = {
       return token;
     },
     async session({ session, user, token }: { session: any; user: any, token: any }) {
-      console.log({ session, token, user })
       if (token.user) {
-        session.user = token.user;
+        session.user._id = token.user._id;
+        session.user.email = token.user.email;
+        session.user.name = token.user.userName;
       }
       return session;
     },

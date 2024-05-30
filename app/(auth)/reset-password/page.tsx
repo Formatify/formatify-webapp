@@ -11,7 +11,6 @@ export default function page({
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
 
-  console.log(searchParams.otp)
 
 
   return (

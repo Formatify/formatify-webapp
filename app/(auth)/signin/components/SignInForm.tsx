@@ -7,7 +7,10 @@ import { SignInValidate } from '@/lib/validation';
 import { signIn, useSession } from 'next-auth/react';
 import LoadingSpinner from '@/components/Loader';
 import toast from 'react-hot-toast';
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
+
+
 
 // Define the type for form values
 interface SignInFormValues {
@@ -50,16 +53,14 @@ export default function SignInForm() {
 
                 else {
                     toast.success("Welcome!");
-                    // actions.resetForm();     
-                    router.push('/dashboard');
-                    console.log({ session })
+                    actions.resetForm();     
+                    router.push('/projects');
 
                 }
             })
             .catch(err => {
                 setIsLoading(false);
                 toast.error("Something went Wrong");
-                console.log(err)
             })
         actions.setSubmitting(false);
     };
@@ -72,7 +73,7 @@ export default function SignInForm() {
             if (res?.error) {
                 toast.error(res.error);
             } else {
-                console.log({ session });
+                toast.success("Welcome!");
                 setTimeout(() => {
                     router.push('/dashboard');
                 }, 3000)
@@ -80,7 +81,6 @@ export default function SignInForm() {
         } catch (err) {
             setIsLoading(false);
             toast.error("Something went wrong");
-            console.error(err);
         }
     };
 
@@ -121,7 +121,7 @@ export default function SignInForm() {
                                 <Field type="email" name="email" id="email" placeholder="john@doe.com"
                                     className="block w-full rounded-md border-0 py-1.5   text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6" />
                             </div>
-                            <ErrorMessage name="email" component="div" className='text-sm text-red-900 pl-2 pt-2' />
+                            <ErrorMessage name="email" component="div" className='text-xs text-red-900 pl-2 pt-1' />
                         </div>
 
                         <div>
@@ -135,19 +135,23 @@ export default function SignInForm() {
                                     className="block w-full rounded-md border-0 py-1.5   text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6" />
 
                             </div>
-                            <ErrorMessage name="password" component="div" className='text-sm text-red-900 pl-2 pt-2' />
+                            <ErrorMessage name="password" component="div" className='text-xs text-red-900 pl-2 pt-1' />
                         </div>
 
                         <div>
                             <Link href="/forget-password" className='text-sm text-green-600 text-right block underline'>Forget Password?</Link>
                         </div>
 
-                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Submit</button>
-                        <button className='bg-green-600 rounded-lg text-white py-2 w-full' onClick={handleGoogleLogin}>Sign in with Google</button>
+                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Sign In</button>
                     </Form>
                 )}
 
             </Formik>
+            <div className='flex items-center flex-col gap-2'>
+                <p className='text-center'>Don't have an account? <Link className='text-green-600' href={'/signup'}>Sign Up</Link></p>
+                <span>or</span>
+                <button className='border-2 px-6 py-2 rounded-lg flex gap-4 items-center justify-center' onClick={handleGoogleLogin} > <FcGoogle size={20} /><span>Sign In  with Google</span></button>
+            </div>
         </>
     )
 }

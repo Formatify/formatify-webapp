@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
   const { data: session } = useSession();
-  console.log({ session })
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">

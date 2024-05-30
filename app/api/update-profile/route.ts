@@ -40,7 +40,6 @@ export const PUT = async (request: any) => {
 
         return new NextResponse("Profile updated successfully", { status: 200 });
     } catch (error) {
-        console.log("Error updating user profile:", error);
         return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 };
