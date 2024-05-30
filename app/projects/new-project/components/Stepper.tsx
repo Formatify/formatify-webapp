@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Templates from "./Templates";
- import Cards from "../../components/Cards";
+import Templates from "@newProject/Templates";
+ import Cards from "@projects/Cards";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { DetailsValidate } from "@/lib/validation";
 import classNames from "classnames";
-import {ProjectDetails} from "@/types/interfaces";
+import {ProjectDetails} from "@/types/index";
 import { emailRegex } from "@/lib/validation";
-import { template } from "@/constants/constants";
-
-
+import { template } from "@/constants/index";
 
 const Stepper = () => {
   const [open, setOpen] = useState("Template Gallery");
@@ -70,13 +68,33 @@ const Stepper = () => {
     setMembers([]);
   };
 
-  const stepperLine01 = classNames("h-1 w-32",{ "bg-green-200": open === "Template Gallery", "bg-green-400": open === "Project Details" || open === "Confirmation"})
-  const stepperLine02 = classNames("h-1 w-32 bg-green-200",{"bg-green-400": open === "Confirmation"})
-  const StepperStep02= classNames("cursor-pointer   border  rounded-full  size-12 text-xl font-medium flex items-center justify-center text-body-color bg-green-200 border-green-200 text-gray-400",{"bg-primary text-white bg-green-400 border-green-400": open === "Project Details" || open === "Confirmation"})
-  const StepperStep03 = classNames("cursor-pointer border rounded-full  size-12 text-xl font-medium flex items-center justify-center text-body-color bg-green-200 border-green-200 text-gray-400",{"bg-primary text-white bg-green-400 border-green-400": open === "Confirmation"})
-  const backButtonClass= classNames("bg-white text-green-400 border border-green-400 px-10 py-2 rounded-md", {"hidden": open === "Template Gallery"})
-  const nextButtonClass= classNames("bg-green-400 text-white px-10 py-2 rounded-md mr-4",{"hidden": open === "Confirmation"})
-  const submitButtonClass= classNames("bg-green-400 text-white px-10 py-2 rounded-md mr-4",{"hidden": open !== "Confirmation"})
+  const stepperLine01BaseClass = "h-1 w-32 bg-green-200"
+  const stepperLine01ActiveClass= {"bg-green-400": open === "Project Details" || open === "Confirmation"}
+  const stepperLine01 = classNames(stepperLine01BaseClass,stepperLine01ActiveClass)
+
+  const stepperLine02BaseClass = "h-1 w-32 bg-green-200"
+  const stepperLine02ActiveClass= {"bg-green-400": open === "Confirmation"}
+  const stepperLine02 = classNames(stepperLine02BaseClass,stepperLine02ActiveClass)
+  
+  const stepperStep02BaseClass= "cursor-pointer   border  rounded-full  size-12 text-xl font-medium flex items-center justify-center text-body-color bg-green-200 border-green-200 text-gray-400"
+  const stepperStep02ActiveClass= {"bg-primary text-white bg-green-400 border-green-400": open === "Project Details" || open === "Confirmation"}
+  const stepperStep02= classNames(stepperStep02BaseClass,stepperStep02ActiveClass)
+
+  const stepperStep03BaseClass= "cursor-pointer border rounded-full  size-12 text-xl font-medium flex items-center justify-center text-body-color bg-green-200 border-green-200 text-gray-400"
+  const stepperStep03ActiveClass= {"bg-primary text-white bg-green-400 border-green-400": open === "Confirmation"}
+  const stepperStep03 = classNames(stepperStep03BaseClass,stepperStep03ActiveClass)
+
+  const backButtonBaseClass= "bg-white text-green-400 border border-green-400 px-10 py-2 rounded-md"
+  const backButtonActiveClass= {"hidden":open === "Template Gallery"}
+  const backButtonClass= classNames(backButtonBaseClass,backButtonActiveClass)
+
+  const nextButtonBaseClass= "bg-green-400 text-white px-10 py-2 rounded-md mr-4"
+  const nextButtonActiveClass= {"hidden": open === "Confirmation"}
+  const nextButtonClass= classNames(nextButtonBaseClass,nextButtonActiveClass)
+
+  const submitButtonBaseClass= "bg-green-400 text-white px-10 py-2 rounded-md mr-4"
+  const submitButtonActiveClass= {"hidden": open !== "Confirmation"}
+  const submitButtonClass= classNames(submitButtonBaseClass,submitButtonActiveClass)
 
   return (
     <>
@@ -99,7 +117,7 @@ const Stepper = () => {
                   </div>
                   <a
                     onClick={() => handleTabOpen("Project Details")}
-                    className={StepperStep02}
+                    className={stepperStep02}
                   >
                     <span>2</span>
                   </a>
@@ -110,7 +128,7 @@ const Stepper = () => {
                   </div>
                   <a
                     onClick={() => handleTabOpen("Confirmation")}
-                    className={StepperStep03}
+                    className={stepperStep03}
                   >
                     <span>3</span>
                   </a>

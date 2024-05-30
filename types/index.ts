@@ -1,4 +1,4 @@
-//used in app/projects/new-project/components/Confirmed.tsx
+//used in app/projects/new-project/components/Stepper.tsx
 export interface ProjectDetails {
     template: string;
     title: string;

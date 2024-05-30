@@ -14,14 +14,14 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
 
-import Design from "./Design";
-import Element from "./Element";
-import Text from "./Text";
-import Brand from "./Brand";
-import Upload from "./Upload";
-import Draw from "./Draw";
-import Project from "./Project";
-import Appli from "./Appli";
+import Design from "@projectId/Design";
+import Element from "@projectId/Element";
+import Text from "@projectId/Text";
+import Brand from "@projectId/Brand";
+import Upload from "@projectId/Upload";
+import Draw from "@projectId/Draw";
+import Project from "@projectId/Project";
+import Appli from "@projectId/Appli";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +81,11 @@ const Sidebar = () => {
       >
         <ul className="mt-4">
           {Menus.map((menu, index) => {
-            const btnClass = classNames('mt-2 font-semibold text-orange-800 text-sm flex flex-col items-center gap-x-4 cursor-pointer  p-2  hover:text-orange-600 hover:font-semibold', {'bg-gray-800 text-orange-600 font-semibold': active === menu.title}, {'bg-gray-900': active !== menu.title})
+            const sideBarBtnBaseClass= 'mt-2 font-semibold text-orange-800 text-sm flex flex-col items-center gap-x-4 cursor-pointer  p-2  hover:text-orange-600 hover:font-semibold'
+            const sideBarBtnActiveClass= {'bg-gray-800 text-orange-600 font-semibold': active === menu.title}
+            const sideBarBtnInactiveClass= {'bg-gray-900': active !== menu.title}
+            
+            const btnClass = classNames(sideBarBtnBaseClass, sideBarBtnActiveClass, sideBarBtnInactiveClass)
             return (
               <li
                 key={index}

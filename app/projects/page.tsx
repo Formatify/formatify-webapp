@@ -1,8 +1,8 @@
 "use client"
 
 import React from 'react'
-import Searchinput from './components/Searchinput'
-import Tab from './components/Tabs'
+import Searchinput from '@projects/Searchinput'
+import Tab from '@projects/Tabs'
 
 
 export default function page() {

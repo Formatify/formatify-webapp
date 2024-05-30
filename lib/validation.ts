@@ -1,5 +1,5 @@
 import { FormikErrors } from "formik";
-import { ProjectDetails, SignInFormValues, NewPasswordFormValues, ForgetFormValues, SignUpFormValues } from "@/types/interfaces";
+import { ProjectDetails, SignInFormValues, NewPasswordFormValues, ForgetFormValues, SignUpFormValues } from "@/types/index";
 
 
 export const SignInValidate = (values: SignInFormValues) => {

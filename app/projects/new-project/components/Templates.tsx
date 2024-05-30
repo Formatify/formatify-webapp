@@ -1,5 +1,5 @@
 import React from "react";
-import {eyeIcon, pdfImage, threeDotsIcon} from "@/constants/constants"
+import {eyeIcon, pdfImage, threeDotsIcon} from "@/constants/index"
 
 export default function Templates({Name }:any) {
         

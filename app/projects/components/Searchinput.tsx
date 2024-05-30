@@ -1,7 +1,5 @@
-
-
 import React from "react";
-import {searchInputImage} from "@/constants/constants"
+import {searchInputImage} from "@/constants/index"
 import { FaSearch } from "react-icons/fa";
 
 

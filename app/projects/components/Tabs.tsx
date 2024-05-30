@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Cards from "./Cards";
-import { files, file2, file3 } from "@/constants/constants";
+import Cards from "@projects/Cards";
+import { files, file2, file3 } from "@/constants/index";
 
 const Tab = () => {
   const [open, setOpen] = useState("All Files");
