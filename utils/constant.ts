@@ -1,3 +1,5 @@
+import { GoProjectSymlink } from "react-icons/go";
+
 export const ROUTES = {
     HOME: '/',
     REGISTER: '/register',
