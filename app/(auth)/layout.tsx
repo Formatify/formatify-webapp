@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const currentYear = new Date()
   return (
     <>
-      <div className="h-screen flex flex-1 justify-center">
+      <div className="lg:h-screen md:h-screen flex flex-1 justify-center">
         <div className=" p-3 sm:p-12 lg:w-3/5 xl:w-3/5 w-ful flex flex-col items-center justify-center">
           <div  className=" ">
             <div className="flex items-center gap-5 lg:ml-5 mb-2">

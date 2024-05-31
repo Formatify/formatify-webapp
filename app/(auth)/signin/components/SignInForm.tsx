@@ -9,6 +9,7 @@ import LoadingSpinner from '@/components/Loader';
 import toast from 'react-hot-toast';
 import { redirect, useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import axios from 'axios';
 
 
 
@@ -53,9 +54,8 @@ export default function SignInForm() {
 
                 else {
                     toast.success("Welcome!");
-                    actions.resetForm();     
+                    actions.resetForm();
                     router.push('/projects');
-
                 }
             })
             .catch(err => {
@@ -75,7 +75,7 @@ export default function SignInForm() {
             } else {
                 toast.success("Welcome!");
                 setTimeout(() => {
-                    router.push('/dashboard');
+                    router.push('/projects');
                 }, 3000)
             }
         } catch (err) {
@@ -91,6 +91,9 @@ export default function SignInForm() {
         const paylaod = {
             email: sendEmail
         }
+
+
+        axios.post('/api/resend-email', paylaod).then(res => console.log(res)).catch(err => console.log(err))
 
         toast.success(`Success, Please Check email at ${paylaod.email}`)
         setIsVerifyExpired(false)
