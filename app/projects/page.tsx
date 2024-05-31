@@ -5,6 +5,7 @@ import Searchinput from '@projects/components/Searchinput'
 import Tab from '@projects/components/Tabs'
 
 
+
 export default function page() {
   return (
     <>

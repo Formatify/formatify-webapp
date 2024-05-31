@@ -34,41 +34,49 @@ const Sidebar = () => {
       title: "Design",
       icon: <HomeIcon className="size-6" />,
       CompoToRender: <Design />,
+      number: 1
     },
     {
       title: "Element",
       icon: <Battery0Icon className="size-6" />,
       CompoToRender: <Element />,
+      number: 2
     },
     {
       title: "Text",
       icon: <AcademicCapIcon className="size-6" />,
       CompoToRender: <Text />,
+      number: 3
     },
     {
       title: "Brand",
       icon: <CogIcon className="size-6" />,
       CompoToRender: <Brand />,
+      number: 4
     },
     {
       title: "Upload",
       icon: <BoltSlashIcon className="size-6" />,
       CompoToRender: <Upload />,
+      number: 5
     },
     {
       title: "Draw",
       icon: <ChatBubbleOvalLeftEllipsisIcon className="size-6" />,
       CompoToRender: <Draw />,
+      number: 6
     },
     {
       title: "Project",
       icon: <MusicalNoteIcon className="size-6" />,
       CompoToRender: <Project />,
+      number: 7
     },
     {
       title: "Appli",
       icon: <DevicePhoneMobileIcon className="size-6" />,
       CompoToRender: <Appli />,
+      number: 8
     },
   ];
 
@@ -111,9 +119,9 @@ const Sidebar = () => {
 
       {isOpen && (
         <div className="flex flex-row justify-center items-center transition-all">
-          <div className="w-60 bg-gray-800 h-screen"> {CompoToRender}</div>
+          <div className="w-72 bg-gray-800 h-screen"> {CompoToRender}</div>
           <button
-            className="w-4 h-20 bg-gray-900 rounded-md"
+            className="w-4 h-20 bg-gray-900 "
             onClick={() => {
               setIsOpen(false);
               setActive("");
