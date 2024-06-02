@@ -6,8 +6,10 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import User from "@/models/User";
 import connect from "@/utils/db";
 import clientPromise from "@/lib/mongodb";
+import type { NextAuthOptions } from "next-auth";
+import { Adapter } from "next-auth/adapters";
 
-export const authOptions: any = {
+export const authOptions: NextAuthOptions = {
 
   providers: [
     CredentialsProvider({
@@ -52,7 +54,7 @@ export const authOptions: any = {
       allowDangerousEmailAccountLinking: true,
     }),
   ],
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: <Adapter>MongoDBAdapter(clientPromise),
   pages: {
     signIn: '/signin',
   },
