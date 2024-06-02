@@ -16,7 +16,7 @@ export default function page({
       </h2>
       {
         searchParams.otp ? <>
-          <h3 className='mt-5 text-xl font-medium'>Don't worry we got you 🙌</h3>
+          <h3 className='mt-5 text-xl font-medium'>Don&lsquo;t worry we got you 🙌</h3>
           <p className='text-sm font-light'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta exercitationem esse, quas dolore soluta ratione quasi ipsam incidunt minima culpa!</p>
           <NewPasswordForm />
         </> : <p className='text-sm font-light'>Invalid Credentils , Please Contact Support for Correct URL.</p>

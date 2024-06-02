@@ -13,7 +13,7 @@ export default function page() {
         Sign Up
       </h2>
 
-      <h3 className='mt-5 text-xl font-medium '> <span className="wave">👋</span> Welcome! Let's see you up.</h3>
+      <h3 className='mt-5 text-xl font-medium '> <span className="wave">👋</span> Welcome! Let&lsquo;s see you up.</h3>
       <p className='text-sm font-light '>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta exercitationem esse, quas dolore soluta ratione quasi ipsam incidunt minima culpa!</p>
 
       <SignupForm />

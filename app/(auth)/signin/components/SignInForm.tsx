@@ -151,7 +151,7 @@ export default function SignInForm() {
 
             </Formik>
             <div className='flex items-center flex-col gap-2'>
-                <p className='text-center'>Don't have an account? <Link className='text-green-600' href={'/signup'}>Sign Up</Link></p>
+                <p className='text-center'>Don&lsquo;t have an account? <Link className='text-green-600' href={'/signup'}>Sign Up</Link></p>
                 <span>or</span>
                 <button className='border-2 px-6 py-2 rounded-lg flex gap-4 items-center justify-center' onClick={handleGoogleLogin} > <FcGoogle size={20} /><span>Sign In  with Google</span></button>
             </div>
