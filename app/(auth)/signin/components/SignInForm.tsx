@@ -68,13 +68,13 @@ export default function SignInForm() {
     const handleGoogleLogin = async () => {
         setIsLoading(true);
         try {
-            const res = await signIn("google", { callbackUrl: "/dashboard" });
+            const res = await signIn("google", { callbackUrl: "/projects" });
             setIsLoading(false);
             if (res?.error) {
                 toast.error(res.error);
             } else {
-                toast.success("Welcome!");
                 setTimeout(() => {
+                    toast.success("Welcome!");
                     router.push('/projects');
                 }, 3000)
             }
