@@ -1,0 +1,8 @@
+services:
+  - name: formatify
+    env: web
+    buildCommand: npm run build
+    startCommand: npm start
+    github:
+      branch: main
+      autoDeploy: true
