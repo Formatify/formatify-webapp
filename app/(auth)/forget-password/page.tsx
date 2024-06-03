@@ -4,7 +4,7 @@ import ForgetForm from './components/ForgetForm'
 
 export default function page() {
   return (
-    <div>
+    <div className='pl-16'>
       <h2 className='text-2xl font-semibold'>
         Forgot Password?
       </h2>

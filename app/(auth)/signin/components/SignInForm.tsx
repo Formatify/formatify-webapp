@@ -22,7 +22,8 @@ export default function SignInForm() {
     const initialValues: SignInFormValues = { email: '', password: '' };
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const [isVerifyExpired, setIsVerifyExpired] = useState(false)
+    const [isVerifyExpired, setIsVerifyExpired] = useState(false);
+    const [sendEmail, setSendEmail] = useState("")
 
     const SubmitForm = (values: SignInFormValues, actions: FormikHelpers<SignInFormValues>) => {
         const { email, password } = values;
@@ -37,7 +38,14 @@ export default function SignInForm() {
                 setIsLoading(false);
 
                 if (res?.error) {
-                    toast.error(res?.error);
+                    if (res.status == 401) {
+                        setSendEmail(email)
+                        setIsVerifyExpired(true);
+                        actions.resetForm()
+                    }
+                    else {
+                        toast.error(res?.error);
+                    }
                 }
 
                 else {
@@ -53,14 +61,26 @@ export default function SignInForm() {
             })
         actions.setSubmitting(false);
     };
+
+
+    const requestEmail = () => {
+
+        const paylaod = {
+            email: sendEmail
+        }
+
+        toast.success(`Success, Please Check email at ${paylaod.email}`)
+        setIsVerifyExpired(false)
+
+    }
     return (
         <>
             {isLoading && <LoadingSpinner />}
 
             {
                 isVerifyExpired && <div className='bg-red-200 py-2 px-4 rounded-lg mt-3 text-sm flex items-center justify-between'>
-                    User Not Verified! Please request a Email.
-                    <button className='px-4 py-2 bg-white text-red-600 rounded-full'>Request</button>
+                    <p> Your account is not verified. Please request a verification email at <span className='font-semibold'>{sendEmail}</span></p>
+                    <button className='px-4 py-2 bg-white text-red-600 rounded-full' onClick={requestEmail}>Request</button>
                 </div>
             }
 
@@ -99,7 +119,7 @@ export default function SignInForm() {
                             <Link href="/forget-password" className='text-sm text-green-600 text-right block underline'>Forget Password?</Link>
                         </div>
 
-                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Submit</button>
+                        <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Sign In</button>
                     </Form>
                 )}
 

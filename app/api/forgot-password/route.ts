@@ -38,7 +38,7 @@ export async function POST(req: Request, res: NextResponse) {
 
                 To reset your password, please follow the link below:
 
-                <a href="http://localhost:3000/client/ForgotPass?otp=${setOTP}">Click Here To Reset Your Password</a>
+                <a href="http://localhost:3000/forget-password/setup-password?otp=${setOTP}">Click Here To Reset Your Password</a>
 
                 <br/><br/>
 

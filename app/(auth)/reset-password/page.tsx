@@ -1,5 +1,5 @@
 import React from 'react'
-import NewPasswordForm from './components/NewPasswordForm'
+import NewPassword from './components/NewPassword'
 
 
 
@@ -11,7 +11,7 @@ export default function page({
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
 
-  console.log(searchParams.OTP)
+  console.log(searchParams.otp)
 
 
   return (
@@ -22,12 +22,12 @@ export default function page({
 
 
       {
-        searchParams.OTP ? <>
+        searchParams.otp ? <>
 
           <h3 className='mt-5 text-xl font-medium'>Don't worry we got you 🙌</h3>
           <p className='text-sm font-light'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta exercitationem esse, quas dolore soluta ratione quasi ipsam incidunt minima culpa!</p>
 
-          <NewPasswordForm />
+          <NewPassword />
         </> : <p className='text-sm font-light'>Invalid Credentils , Please Contact Support for Correct URL.</p>
 
       }
