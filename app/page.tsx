@@ -13,10 +13,7 @@ export default function Home() {
   const handleSubscribe = async () => {
     try {
       const res = await axios.post('/api/subscribe', { email });
-      console.log("res --->", res)
-      if (res.statusText === 'OK') {
-        toast.success('Subscribed successfully')
-      }
+      toast.success(res.data.message ?? '')
       setEmail('')
     } catch (e) {
       console.log({ e })
