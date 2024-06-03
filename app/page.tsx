@@ -1,8 +1,29 @@
+'use client';
+
 import Image from "next/image";
-import { LinkedinnIcon,formatifyLogo, FbIcon, XIcon, InstIcon } from "@/utils/constant";
+import { LinkedinnIcon, formatifyLogo, FbIcon, XIcon, InstIcon } from "@/utils/constant";
 import Link from "next/link";
+import { useState } from "react";
+import axios, { AxiosError } from "axios";
+import toast from "react-hot-toast";
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = async () => {
+    try {
+      const res = await axios.post('/api/subscribe', { email });
+      if (res.statusText === 'OK') {
+        toast.success('Subscribed successfully')
+      }
+      setEmail('')
+    } catch (e) {
+      console.log({ e })
+      const error = e as AxiosError<{ message: string }>;
+      toast.error(error?.response?.data?.message ?? '')
+    }
+  }
+
   return (
     <div className="h-screen w-full dark:bg-black bg-white  dark:bg-grid-white/[0.05] bg-grid-black/[0.05] relative flex items-center lg:justify-center flex-col">
       {/* Radial gradient for the container to give a faded look */}
@@ -32,8 +53,8 @@ export default function Home() {
       </div>
 
       <div className="flex justify-center items-center gap-4 mt-6">
-        <input className=" rounded-3xl w-48 text-xs lg:text-base md:text-base md:w-96 lg:w-96 " placeholder="Please enter your e-mail address" />
-        <button className="bg-green-500 text-white text-xs w-20 md:text-base lg:text-base md:w-32 lg:w-32 rounded-3xl border h-9 lg:h-11 md:h-11 " >Subscribe</button>
+        <input value={email} onChange={(e) => setEmail(e.target.value)} className=" rounded-3xl w-48 text-xs lg:text-base md:text-base md:w-96 lg:w-96 " placeholder="Please enter your e-mail address" />
+        <button onClick={handleSubscribe} className="bg-green-500 text-white text-xs w-20 md:text-base lg:text-base md:w-32 lg:w-32 rounded-3xl border h-9 lg:h-11 md:h-11 " >Subscribe</button>
       </div>
 
       <div className="">
