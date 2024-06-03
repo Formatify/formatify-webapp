@@ -7,7 +7,7 @@ export default function Success() {
     return (
         <div className='flex flex-col items-center justify-center h-screen w-screen'>
             <div className='h-24 w-24 my-10'>
-                <Image src={SuccessImage.src} alt='success' />
+                <Image width={100} height={100} src={SuccessImage.src} alt='success' />
             </div>
             <h2 className='text-3xl font-medium'>Verified!</h2>
             <p className='font-light my-5'>You have successfully veried your Account</p>
