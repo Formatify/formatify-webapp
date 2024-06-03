@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="h-screen w-full dark:bg-black bg-white  dark:bg-grid-white/[0.05] bg-grid-black/[0.05] relative flex items-center justify-center flex-col">
+    <div className="h-screen w-full dark:bg-black bg-white  dark:bg-grid-white/[0.05] bg-grid-black/[0.05] relative flex items-center lg:justify-center flex-col">
       {/* Radial gradient for the container to give a faded look */}
       <Image width={75} height={75} src={formatifyLogo} alt="Logo" className="mt-12 z-10"></Image>
       <div className="flex flex-col items-center justify-center mt-10">
@@ -39,13 +39,13 @@ export default function Home() {
       <div className="">
         <ul className="flex gap-6">
           <li className="z-10">
-            <Link href={""}> <Image width={40} height={40} src={LinkedinnIcon} alt="Logo" className="mt-12"></Image> </Link>
+            <Link href={"https://www.linkedin.com/company/formatify "}> <Image width={40} height={40} src={LinkedinnIcon} alt="Logo" className="mt-12"></Image> </Link>
           </li>
           <li className="z-10">
-            <Link href={""}> <Image width={40} height={40} src={InstIcon} alt="Logo" className="mt-12"></Image> </Link>
+            <Link href={"https://www.instagram.com/formatify.io/"}> <Image width={40} height={40} src={InstIcon} alt="Logo" className="mt-12"></Image> </Link>
           </li>
           <li className="z-10">
-            <Link href={""}> <Image width={40} height={40} src={FbIcon} alt="Logo" className="mt-12"></Image> </Link>
+            <Link href={"https://www.facebook.com/formatify"}> <Image width={40} height={40} src={FbIcon} alt="Logo" className="mt-12"></Image> </Link>
           </li>
           <li className="z-10">
             <Link href={""}> <Image width={40} height={40} src={XIcon} alt="Logo" className="mt-12"></Image> </Link>
