@@ -33,7 +33,6 @@ export async function POST(req: any) {
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error confirming OTP:', error);
         return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 }

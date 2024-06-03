@@ -33,10 +33,7 @@ export default function NewPasswordForm() {
 
 
     const SubmitForm = (values: SetupNewPasswordFormValues, actions: FormikHelpers<SetupNewPasswordFormValues>) => {
-
         const payload = { email: values.email, OTP: OTP, password: values.password }
-        console.log(payload)
-
         if (payload.email && payload.OTP) {
 
             axios.post('http://localhost:3000/api/reset-password', payload)
@@ -57,9 +54,6 @@ export default function NewPasswordForm() {
     };
     return (
         <>
-
-
-
             <Formik initialValues={initialValues} validate={SetupNewPasswordFormValues} onSubmit={SubmitForm}>
                 {() => (
                     <Form className='my-5 flex flex-col gap-4'>
@@ -102,10 +96,6 @@ export default function NewPasswordForm() {
                             </div>
                             <ErrorMessage name="confirm_password" component="div" className='text-sm text-red-900 pl-2 pt-2' />
                         </div>
-
-
-
-
                         <button type="submit" className='bg-green-600 rounded-lg text-white py-2 w-full'>Set Password</button>
                     </Form>
                 )}

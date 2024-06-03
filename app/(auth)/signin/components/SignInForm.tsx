@@ -4,10 +4,12 @@ import React, { useState } from 'react'
 import Link from 'next/link';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { SignInValidate } from '@/lib/validation';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import LoadingSpinner from '@/components/Loader';
 import toast from 'react-hot-toast';
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
+import axios from 'axios';
 
 
 
@@ -21,12 +23,14 @@ export default function SignInForm() {
 
     const initialValues: SignInFormValues = { email: '', password: '' };
     const [isLoading, setIsLoading] = useState(false);
+    const { data: session } = useSession();
     const router = useRouter();
     const [isVerifyExpired, setIsVerifyExpired] = useState(false);
     const [sendEmail, setSendEmail] = useState("")
 
     const SubmitForm = (values: SignInFormValues, actions: FormikHelpers<SignInFormValues>) => {
         const { email, password } = values;
+
 
         setIsLoading(true);
         signIn("credentials", {
@@ -51,16 +55,35 @@ export default function SignInForm() {
                 else {
                     toast.success("Welcome!");
                     actions.resetForm();
-                    if (res?.url) router.replace("/dashboard");
+                    router.push('/projects');
                 }
             })
             .catch(err => {
                 setIsLoading(false);
                 toast.error("Something went Wrong");
-                console.log(err)
             })
         actions.setSubmitting(false);
     };
+
+    const handleGoogleLogin = async () => {
+        setIsLoading(true);
+        try {
+            const res = await signIn("google", { callbackUrl: "/dashboard" });
+            setIsLoading(false);
+            if (res?.error) {
+                toast.error(res.error);
+            } else {
+                toast.success("Welcome!");
+                setTimeout(() => {
+                    router.push('/projects');
+                }, 3000)
+            }
+        } catch (err) {
+            setIsLoading(false);
+            toast.error("Something went wrong");
+        }
+    };
+
 
 
     const requestEmail = () => {
@@ -68,6 +91,9 @@ export default function SignInForm() {
         const paylaod = {
             email: sendEmail
         }
+
+
+        axios.post('/api/resend-email', paylaod).then(res => console.log(res)).catch(err => console.log(err))
 
         toast.success(`Success, Please Check email at ${paylaod.email}`)
         setIsVerifyExpired(false)
@@ -98,7 +124,7 @@ export default function SignInForm() {
                                 <Field type="email" name="email" id="email" placeholder="john@doe.com"
                                     className="block w-full rounded-md border-0 py-1.5   text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6" />
                             </div>
-                            <ErrorMessage name="email" component="div" className='text-sm text-red-900 pl-2 pt-2' />
+                            <ErrorMessage name="email" component="div" className='text-xs text-red-900 pl-2 pt-1' />
                         </div>
 
                         <div>
@@ -112,7 +138,7 @@ export default function SignInForm() {
                                     className="block w-full rounded-md border-0 py-1.5   text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6" />
 
                             </div>
-                            <ErrorMessage name="password" component="div" className='text-sm text-red-900 pl-2 pt-2' />
+                            <ErrorMessage name="password" component="div" className='text-xs text-red-900 pl-2 pt-1' />
                         </div>
 
                         <div>
@@ -124,6 +150,11 @@ export default function SignInForm() {
                 )}
 
             </Formik>
+            <div className='flex items-center flex-col gap-2'>
+                <p className='text-center'>Don&lsquo;t have an account? <Link className='text-green-600' href={'/signup'}>Sign Up</Link></p>
+                <span>or</span>
+                <button className='border-2 px-6 py-2 rounded-lg flex gap-4 items-center justify-center' onClick={handleGoogleLogin} > <FcGoogle size={20} /><span>Sign In  with Google</span></button>
+            </div>
         </>
     )
 }

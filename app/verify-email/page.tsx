@@ -29,7 +29,6 @@ const VerifyEmailPage = () => {
                     setVerificationStatus('error');
                 }
             } catch (error) {
-                console.error('Error verifying email:', error);
                 setVerificationStatus('error');
             } finally {
                 setIsLoading(false);

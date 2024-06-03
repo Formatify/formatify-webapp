@@ -48,8 +48,6 @@ export default function HorizontalLinearAlternativeLabelStepper() {
     };
 
     const SubmitForm = (values: StepperProps, actions: FormikHelpers<StepperProps>) => {
-        console.log(values)
-
 
         actions.setSubmitting(false);
     };

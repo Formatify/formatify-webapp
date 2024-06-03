@@ -6,18 +6,16 @@ import { NextResponse } from "next/server";
 import fs from 'fs';
 import handlebars from 'handlebars'
 import path from "path";
-// import EmailTemplate from "../../../utils"
 
 type RequestBody = {
-  firstName: string;
-  lastName: string;
+  userName: string;
   email: string;
   password: string;
-  country: string;
-  city: string;
-  university: string;
-  department: string;
-  subscription: string;
+  country?: string;
+  city?: string;
+  university?: string;
+  department?: string;
+  subscription?: string;
   verificationToken: string;
 };
 
@@ -27,8 +25,7 @@ export const POST = async (request: any) => {
     await connect();
 
     const body = await request.json();
-    const { firstName, lastName, email, password, country, city, university, department, subscription, verificationToken } = body as RequestBody;
-
+    const { userName, email, password, country, city, university, department, subscription, verificationToken } = body as RequestBody;
     const existingUser = await User.findOne({ email });
 
 
@@ -45,24 +42,23 @@ export const POST = async (request: any) => {
       return new NextResponse(JSON.stringify({ error_code: 'account_exists', message: "Account with this email already exist" }), { status: 400 });
     }
 
-    if (!firstName || !lastName || !email || !password || !country || !city || !university || !department || !subscription) {
+    if (!userName || !email || !password) {
       return new NextResponse(JSON.stringify({ error_code: 'field_missing', message: "All fields are required" }), { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const newUser = new User({
-      firstName,
-      lastName,
+      userName,
       email,
       password: hashedPassword,
-      country,
-      city,
-      university,
-      department,
-      subscription,
+      country: country || '',
+      city: city || '',
+      university: university || '',
+      department: department || '',
+      subscription: subscription || '',
       isVerified: false,
-      verificationToken,
+      verificationToken: verificationToken,
       OTP: null,
       imageUrl: "https://gravatar.com/avatar/2f138e608281f56869f4aad34b3e7e7d?s=400&d=robohash&r=x"
     });
@@ -70,7 +66,6 @@ export const POST = async (request: any) => {
     const emailSent = await sendEmail(email, "Welcome to Our App", htmlToSend);
 
     if (!emailSent) {
-      console.error("Failed to send verification email");
       return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 

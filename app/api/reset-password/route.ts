@@ -34,7 +34,6 @@ export async function POST(req: Request, res: NextResponse) {
             { status: 200 }
         );
     } catch (error) {
-        console.log("Error:", error);
         return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 }

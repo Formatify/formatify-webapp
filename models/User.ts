@@ -4,42 +4,30 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    firstName: {
+    userName: {
       type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
     },
     email: {
       type: String,
       unique: true,
-      required: true,
     },
     password: {
       type: String,
-      required: true,
     },
     country: {
       type: String,
-      required: true,
     },
     city: {
       type: String,
-      required: true,
     },
     university: {
       type: String,
-      required: true,
     },
     department: {
       type: String,
-      required: true,
     },
     subscription: {
       type: String,
-      required: true,
     },
     isVerified: {
       type: Boolean,
@@ -47,15 +35,18 @@ const userSchema = new Schema(
     },
     verificationToken: {
       type: String,
-      required: true,
+    },
+    isSocialSignup: {
+      type: Boolean,
+      default: false,
     },
     OTP: {
       type: String,
       default: null
-  },
-  imageUrl: {
+    },
+    imageUrl: {
       type: String,
-  }
+    }
   },
   { timestamps: true }
 );

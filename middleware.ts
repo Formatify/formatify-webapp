@@ -6,7 +6,6 @@ export default withAuth(function middleware(req) {
 
     if (!req.nextauth.token) {
         const url = req.nextUrl.clone();
-        console.log({url})
         url.pathname = "/login";
         return NextResponse.rewrite(url);
     }
@@ -14,5 +13,5 @@ export default withAuth(function middleware(req) {
 });
 
 export const config = {
-    matcher: ["/dashboard"],// Routes you want to protect
+    matcher: ["/dashboard", "/projects/:path*", "/profile/:path*"],// Routes you want to protect
 };

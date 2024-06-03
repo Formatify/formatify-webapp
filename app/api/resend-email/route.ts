@@ -17,10 +17,6 @@ export const POST = async (request: any) => {
 
         const body = await request.json();
         const { email } = body as RequestBody;
-
-        console.log({ email })
-
-
         if (!email) {
             return new NextResponse(JSON.stringify({ error_code: 'field_missing', message: "Email is required" }), { status: 400 });
         }
@@ -50,7 +46,6 @@ export const POST = async (request: any) => {
         const emailSent = await sendEmail(email, "Resend Verification Email", htmlToSend);
 
         if (!emailSent) {
-            console.error("Failed to send verification email");
             return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
         }
 
@@ -59,7 +54,6 @@ export const POST = async (request: any) => {
         return NextResponse.json({ message: 'Verification email resent successfully' }, { status: 200 });
 
     } catch (error) {
-        console.error(error);
         return new NextResponse(JSON.stringify({ error_code: 'internal_server_error', message: "Something went wrong" }), { status: 500 });
     }
 };
