@@ -13,6 +13,7 @@ export default function Home() {
   const handleSubscribe = async () => {
     try {
       const res = await axios.post('/api/subscribe', { email });
+      console.log("res --->", res)
       if (res.statusText === 'OK') {
         toast.success('Subscribed successfully')
       }
@@ -21,6 +22,7 @@ export default function Home() {
       console.log({ e })
       const error = e as AxiosError<{ message: string }>;
       toast.error(error?.response?.data?.message ?? '')
+      setEmail('')
     }
   }
 
@@ -42,14 +44,14 @@ export default function Home() {
 
         <div className="text-4xl font-bold lg:text-8xl"> ON THE WAY </div>
 
-       <div className="flex justify-center items-center "> 
-       <div className=" text-center text-xs w-72 mt-6 lg:hidden md:hidden ">
+        <div className="flex justify-center items-center ">
+          <div className=" text-center text-xs w-72 mt-6 lg:hidden md:hidden ">
             {" "}
             Subscribe to be the first to know about our website and product
             updates!{" "}
           </div>
-       </div>
-        
+        </div>
+
       </div>
 
       <div className="flex justify-center items-center gap-4 mt-6">
