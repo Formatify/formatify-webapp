@@ -10,6 +10,13 @@ export  interface Details {
     title: string;
     email: string[];
   }
+
+
+  export interface AddAuthorsValues {
+    email: string;
+  }
+
+
   
 export interface SignInFormValues {
     email: string;

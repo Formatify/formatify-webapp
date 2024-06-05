@@ -15,7 +15,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import Design from "@projects/[projectId]/components/Design";
-import Element from "@projects/[projectId]/components/Element";
+import Author from "@/app/projects/[projectId]/components/Author";
 import Text from "@projects/[projectId]/components/Text";
 import Brand from "@projects/[projectId]/components/Brand";
 import Upload from "@projects/[projectId]/components/Upload";
@@ -26,8 +26,17 @@ import Appli from "@projects/[projectId]/components/Appli";
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [CompoToRender, setCompoToRender] = useState(<></>);
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState(0);
+  const[newActive, setNewActive] = useState(0)
+   
+  
 
+  interface Menus{ 
+    title: string;
+    icon: any;
+    CompoToRender: JSX.Element;
+    number: number;
+  }
 
   const Menus = [
     {
@@ -37,9 +46,9 @@ const Sidebar = () => {
       number: 1
     },
     {
-      title: "Element",
+      title: "Author",
       icon: <Battery0Icon className="size-6" />,
-      CompoToRender: <Element />,
+      CompoToRender: <Author />,
       number: 2
     },
     {
@@ -80,38 +89,57 @@ const Sidebar = () => {
     },
   ];
 
+  // const motion= ()=>{
+
+
+  //     if (active < newActive) {
+  //       for (let i = active; i >= newActive; i++) {
+  //        setActive(+1) 
+  //        console.log(active+ newActive)
+  //       }
+  //     } else {
+  //       for (let i = active; i <= newActive; i--) {
+  //         setActive(-1) 
+  //         console.log(active+ newActive)
+  //       }
+  //     }
+  // }
+
   return (
     <div className="fixed h-full flex flex-row">
       <div
-        className={`bg-gray-900 text-white w-20 h-full`}
+        className={`bg-white w-20 h-full`}
         onClick={() => setIsOpen(true)}
         onDoubleClick={() => setIsOpen(false)}
       >
-        <ul className="mt-4">
+        <ul className="mt-4 ">
           {Menus.map((menu, index) => {
-            const sideBarBtnBaseClass= 'mt-2 font-semibold text-orange-800 text-sm flex flex-col items-center gap-x-4 cursor-pointer  p-2  hover:text-orange-600 hover:font-semibold'
-            const sideBarBtnActiveClass= {'bg-gray-800 text-orange-600 font-semibold': active === menu.title}
-            const sideBarBtnInactiveClass= {'bg-gray-900': active !== menu.title}
+            const sideBarBtnBaseClass= 'py-2 font-semibold text-sm flex flex-col items-center gap-x-4 cursor-pointer p-2 hover:font-semibold'
+            const sideBarBtnActiveClass= {' text-white bg-green-400 rounded-tr-xl rounded-br-xl font-semibold': active === menu.number}
+            const sideBarBtnInactiveClass= {'text-green-700 bg-white  hover:text-green-400': active !== menu.number}
             
             const btnClass = classNames(sideBarBtnBaseClass, sideBarBtnActiveClass, sideBarBtnInactiveClass)
             return (
-              <li
+             <div className="bg-green-400 rounded-"> <li
                 key={index}
                 className={btnClass}
                 onClick={() => {
                   setIsOpen(true);
                   setCompoToRender(menu.CompoToRender);
-                  setActive(menu.title);
+                  // motion()
+                  setActive(menu.number)
+                  setNewActive(menu.number)
                 }}
               >
                 {menu.icon}
                 <span
                   //style={{ transitionDelay: `${index + 1}00ms` }}
-                  className={`whitespace-pre origin-left duration-500 hover:text-orange-600 hover:font-semibold`}
+                  className={`whitespace-pre origin-left duration-500 hover:font-semibold`}
                 >
                   {menu.title}
                 </span>
               </li>
+              </div>
             );
           })}
         </ul>
@@ -119,16 +147,16 @@ const Sidebar = () => {
 
       {isOpen && (
         <div className="flex flex-row justify-center items-center transition-all">
-          <div className="w-72 bg-gray-800 h-screen"> {CompoToRender}</div>
+          <div className="w-72 bg-green-400  h-screen"> {CompoToRender}</div>
           <button
-            className="w-4 h-20 bg-gray-900 "
+            className="w-4 h-20 bg-green-400 rounded-br-full rounded-tr-full"
             onClick={() => {
               setIsOpen(false);
-              setActive("");
+              setActive(0);
             }}
           >
             {" "}
-            <ArrowLeftIcon className="size-4 text-orange-600" />
+            <ArrowLeftIcon className="size-4 pr-1 text-orange-600" />
           </button>
         </div>
       )}
