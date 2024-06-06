@@ -1,25 +1,8 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
-import {
-  LinkedinnIcon,
-  formatifyLogo,
-  FbIcon,
-  XIcon,
-  InstIcon,
-} from "@/utils/constant";
+import {formatifyLogo,} from "@/utils/constant";
 import Link from "next/link";
 
 export default function Home() {
-  const [isHovered, setIsHovered] = useState("#000000");
-
-  const mouseIn = () => {
-    setIsHovered("#22C55E");
-  };
-  const mouseOut = () => {
-    setIsHovered("#000000");
-  };
 
   return (
     <div className="h-screen w-full dark:bg-black bg-white  dark:bg-grid-white/[0.05] bg-grid-black/[0.03] relative flex items-center justify-center flex-col">
@@ -70,7 +53,7 @@ export default function Home() {
           <li className="z-10 mt-11 flex items-center justify-center">
             <Link
               className="border text-black p-3 border-black hover:border-2 hover:text-formatify hover:border-formatify rounded-full"
-              href={""}
+              href={"https://www.linkedin.com/company/formatify/"}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +69,7 @@ export default function Home() {
           <li className="z-10 mt-11 flex items-center justify-center">
             <Link
               className="border text-black p-3 border-black hover:border-2 hover:text-formatify hover:border-formatify rounded-full"
-              href={""}
+              href={"https://www.instagram.com/formatify.io/"}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +85,7 @@ export default function Home() {
           <li className="z-10 mt-11 flex items-center justify-center">
             <Link
               className="border text-black p-3 border-black hover:border-2 hover:text-formatify hover:border-formatify rounded-full"
-              href={""}
+              href={"https://www.facebook.com/formatify"}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
