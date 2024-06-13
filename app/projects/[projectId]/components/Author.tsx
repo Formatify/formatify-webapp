@@ -111,13 +111,6 @@ const Board = () => {
           cards={cards}
           setCards={setCards}
         />
-        {/* <Column
-        title="TODO"
-        column="todo"
-        headingColor="text-yellow-200"
-        cards={cards}
-        setCards={setCards}
-      /> */}
       </div>
     </div>
   );
